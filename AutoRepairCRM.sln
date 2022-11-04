@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRepairCRM", "AutoRepairCRM\AutoRepairCRM.csproj", "{A7C331D9-B2D9-4C8F-ACD5-6D1F7537B30A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRepairCRM.Database", "AutoRepairCRM.Database\AutoRepairCRM.Database.csproj", "{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{A7C331D9-B2D9-4C8F-ACD5-6D1F7537B30A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7C331D9-B2D9-4C8F-ACD5-6D1F7537B30A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7C331D9-B2D9-4C8F-ACD5-6D1F7537B30A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

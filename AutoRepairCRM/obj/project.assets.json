@@ -729,6 +729,19 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "AutoRepairCRM.Database/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10"
+        },
+        "compile": {
+          "bin/placeholder/AutoRepairCRM.Database.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AutoRepairCRM.Database.dll": {}
+        }
       }
     }
   },
@@ -1683,10 +1696,16 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "AutoRepairCRM.Database/1.0.0": {
+      "type": "project",
+      "path": "../AutoRepairCRM.Database/AutoRepairCRM.Database.csproj",
+      "msbuildProject": "../AutoRepairCRM.Database/AutoRepairCRM.Database.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "AutoRepairCRM.Database >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.5",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.5",
       "Microsoft.AspNetCore.Identity.UI >= 6.0.5",
@@ -1718,7 +1737,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\gazar\\RiderProjects\\AutoRepairCRM\\AutoRepairCRM.Database\\AutoRepairCRM.Database.csproj": {
+              "projectPath": "C:\\Users\\gazar\\RiderProjects\\AutoRepairCRM\\AutoRepairCRM.Database\\AutoRepairCRM.Database.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -1773,5 +1796,16 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Detected package downgrade: Microsoft.AspNetCore.Identity.EntityFrameworkCore from 6.0.10 to 6.0.5. Reference the package directly from the project to select a different version. \r\n AutoRepairCRM -> AutoRepairCRM.Database -> Microsoft.AspNetCore.Identity.EntityFrameworkCore (>= 6.0.10) \r\n AutoRepairCRM -> Microsoft.AspNetCore.Identity.EntityFrameworkCore (>= 6.0.5)",
+      "libraryId": "Microsoft.AspNetCore.Identity.EntityFrameworkCore",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

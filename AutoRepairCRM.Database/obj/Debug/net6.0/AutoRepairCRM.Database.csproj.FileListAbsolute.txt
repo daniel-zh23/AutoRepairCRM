@@ -1,0 +1,12 @@
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.csproj.AssemblyReference.cache
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.AssemblyInfoInputs.cache
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.AssemblyInfo.cs
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.csproj.CoreCompileInputs.cache
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\bin\Debug\net6.0\AutoRepairCRM.Database.deps.json
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\bin\Debug\net6.0\AutoRepairCRM.Database.dll
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\bin\Debug\net6.0\AutoRepairCRM.Database.pdb
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.dll
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\refint\AutoRepairCRM.Database.dll
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\AutoRepairCRM.Database.pdb
+C:\Users\gazar\RiderProjects\AutoRepairCRM\AutoRepairCRM.Database\obj\Debug\net6.0\ref\AutoRepairCRM.Database.dll

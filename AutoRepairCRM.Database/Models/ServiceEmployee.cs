@@ -10,7 +10,7 @@ public class ServiceEmployee
     [ForeignKey(nameof(Service))]
     public int ServiceId { get; set; }
 
-    public Service Service { get; set; }
+    public Service Service { get; set; } = null!;
 
-    public Employee Employee { get; set; }
+    public Employee Employee { get; set; } = null!;
 }

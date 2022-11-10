@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRepairCRM", "AutoRepair
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRepairCRM.Database", "AutoRepairCRM.Database\AutoRepairCRM.Database.csproj", "{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoRepairCRM.Core", "AutoRepairCRM.Core\AutoRepairCRM.Core.csproj", "{E4FB00D7-5EAE-4DE6-B43E-445F9FD60295}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{703EFBA0-9904-46B5-A4E3-EED9BA9157E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4FB00D7-5EAE-4DE6-B43E-445F9FD60295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4FB00D7-5EAE-4DE6-B43E-445F9FD60295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4FB00D7-5EAE-4DE6-B43E-445F9FD60295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4FB00D7-5EAE-4DE6-B43E-445F9FD60295}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

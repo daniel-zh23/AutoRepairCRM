@@ -1,4 +1,4 @@
-﻿using AutoRepairCRM.Database.Models;
+﻿using AutoRepairCRM.Database.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

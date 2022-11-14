@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AutoRepairCRM.Database.Models;
+namespace AutoRepairCRM.Database.Data.Models;
 
 public class CustomerCar
 {

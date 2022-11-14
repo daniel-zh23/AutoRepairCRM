@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AutoRepairCRM.Database.Common;
+using AutoRepairCRM.Database.Data.Constants;
 
-namespace AutoRepairCRM.Database.Models;
+namespace AutoRepairCRM.Database.Data.Models;
 
 public class Customer
 {

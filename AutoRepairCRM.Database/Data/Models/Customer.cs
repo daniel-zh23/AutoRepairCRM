@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using AutoRepairCRM.Database.Data.Constants;
+using AutoRepairCRM.Database.Data.Models.Account;
 
 namespace AutoRepairCRM.Database.Data.Models;
 
@@ -8,21 +10,10 @@ public class Customer
     [Key]
     public int Id { get; set; }
 
-    [Required]
-    [MaxLength(DataConstants.Person.MaxCustomerFNameLength)]
-    public string FirstName { get; set; } = null!;
+    [ForeignKey(nameof(User))] 
+    public string UserId { get; set; } = null!;
 
-    [Required] 
-    [MaxLength(DataConstants.Person.MaxCustomerLNameLength)]
-
-    public string LastName { get; set; } = null!;
-
-    [Required]
-    [MaxLength(DataConstants.Person.MaxCustomerPhoneLength)]
-    public string PhoneNumber { get; set; } = null!;
-
-    [EmailAddress]
-    public string? Email { get; set; }
+    public ApplicationUser User { get; set; } = null!;
 
     public IEnumerable<CustomerCar> CustomerCars { get; set; } = new List<CustomerCar>();
 }

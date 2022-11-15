@@ -8,6 +8,9 @@ public class Service
 {
     [Key]
     public int Id { get; set; }
+    
+    [ForeignKey(nameof(ServiceState))]
+    public int ServiceStateId { get; set; }
 
     [ForeignKey(nameof(ServiceType))]
     public int ServiceTypeId { get; set; }
@@ -18,7 +21,12 @@ public class Service
     
     public int CustomerCarId { get; set; }
 
-    [ForeignKey("CustomerId, CarId")] public CustomerCar CustomerCar { get; set; } = null!;
+    [ForeignKey("CustomerId, CarId")] 
+    public CustomerCar CustomerCar { get; set; } = null!;
 
     public ServiceType ServiceType { get; set; } = null!;
+    
+    public ServiceState ServiceState { get; set; } = null!;
+    
+    public IEnumerable<ServiceEmployee> ServicesEmployees { get; set; } = new List<ServiceEmployee>();
 }

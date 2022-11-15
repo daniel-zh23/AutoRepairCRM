@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AutoRepairCRM.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoRepairCRM.Controllers;
 
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -17,12 +19,12 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    public IActionResult Privacy()
+    
+    public IActionResult Test()
     {
-        return View();
+        return View("Privacy");
     }
-
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

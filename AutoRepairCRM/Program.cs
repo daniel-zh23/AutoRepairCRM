@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using AutoRepairCRM.Database.Data;
+using AutoRepairCRM.Database.Data.Models.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +10,23 @@ builder.Services.AddDbContext<AutoRepairCrmDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<AutoRepairCrmDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Owner", policy =>
+    {
+        policy.RequireRole("Office");
+        policy.RequireRole("EditCustomers");
+    });
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+});
 
 var app = builder.Build();
 

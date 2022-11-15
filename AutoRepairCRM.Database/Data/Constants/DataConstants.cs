@@ -48,4 +48,12 @@ public static class DataConstants
     {
         public const int MaxServiceTypeLength = 25;
     }
+    
+    /// <summary>
+    /// Constants for ServiceType DTO model
+    /// </summary>
+    public static class ServiceState
+    {
+        public const int MaxServiceStateLength = 25;
+    }
 }

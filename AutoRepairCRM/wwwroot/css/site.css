@@ -16,3 +16,79 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Sidebar */
+.sidebar {
+  background: #ecf0f3;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 58px 0 0; /* Height of navbar */
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+  z-index: 600;
+  overflow-x: hidden;
+  transition: width 0.3s;
+  width: 50px;
+  white-space: nowrap;
+}
+
+.sidebar .active {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.container{
+  margin-top: 80px;
+  margin-left: 80px;
+}
+
+.footer{
+  margin-left: 50px;
+}
+
+.navbar{
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+}
+
+.list-group-item{
+  background: #ecf0f3;
+  border:none;
+  box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
+  padding: 0;
+}
+
+.list-group-item:hover{
+  box-shadow: none;
+  background: #ecf0f3;
+}
+
+.list-item{
+  border-radius: 5px;
+}
+
+.sidebar span {
+  transition: opacity 0.4s;
+  opacity: 0;
+}
+
+.sidebar:hover{
+  width: 240px;
+}
+
+.sidebar:hover span{
+  opacity: 1;
+}
+
+.pressed{
+  background-color: #03A9F4;
+}

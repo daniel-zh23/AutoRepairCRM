@@ -22,7 +22,7 @@ namespace AutoRepairCRM.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Car", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +50,7 @@ namespace AutoRepairCRM.Database.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Customer", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,30 +58,18 @@ namespace AutoRepairCRM.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.CustomerCar", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.CustomerCar", b =>
                 {
                     b.Property<int>("CarId")
                         .HasColumnType("int");
@@ -100,7 +88,7 @@ namespace AutoRepairCRM.Database.Migrations
                     b.ToTable("CustomersCars");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Employee", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,7 +114,7 @@ namespace AutoRepairCRM.Database.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Service", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Service", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,10 +134,15 @@ namespace AutoRepairCRM.Database.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(7,2)");
 
+                    b.Property<int>("ServiceStateId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ServiceTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ServiceStateId");
 
                     b.HasIndex("ServiceTypeId");
 
@@ -158,7 +151,7 @@ namespace AutoRepairCRM.Database.Migrations
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.ServiceEmployee", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.ServiceEmployee", b =>
                 {
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
@@ -173,7 +166,25 @@ namespace AutoRepairCRM.Database.Migrations
                     b.ToTable("ServicesEmployees");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.ServiceType", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.ServiceState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceState");
+                });
+
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.ServiceType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,6 +266,10 @@ namespace AutoRepairCRM.Database.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -306,6 +321,8 @@ namespace AutoRepairCRM.Database.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -393,15 +410,63 @@ namespace AutoRepairCRM.Database.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.CustomerCar", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Account.ApplicationUser", b =>
                 {
-                    b.HasOne("AutoRepairCRM.Database.Models.Car", "Car")
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "0239c357-0af5-427b-ac0d-3b907b1f8a4a",
+                            Email = "admin@abv.bg",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ABV.BG",
+                            NormalizedUserName = "ADMIN@ABV.BG",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIqbJHbPV5eORiC8IR5EnFUKJTlOXWwj+kHzT9QbjJ8g1AzlGpU6BAdN/RSUzy/8HQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3fc7a76b-1bd6-443d-9a69-c38c7177a7ef",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@abv.bg",
+                            FirstName = "Admin",
+                            LastName = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Customer", b =>
+                {
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.Account.ApplicationUser", "User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.CustomerCar", b =>
+                {
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.Car", "Car")
+                        .WithMany("CustomerCars")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoRepairCRM.Database.Models.Customer", "Customer")
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.Customer", "Customer")
                         .WithMany("CustomerCars")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,15 +477,21 @@ namespace AutoRepairCRM.Database.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Service", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Service", b =>
                 {
-                    b.HasOne("AutoRepairCRM.Database.Models.ServiceType", "ServiceType")
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.ServiceState", "ServiceState")
+                        .WithMany()
+                        .HasForeignKey("ServiceStateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.ServiceType", "ServiceType")
                         .WithMany()
                         .HasForeignKey("ServiceTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoRepairCRM.Database.Models.CustomerCar", "CustomerCar")
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.CustomerCar", "CustomerCar")
                         .WithMany("Services")
                         .HasForeignKey("CustomerId", "CarId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -428,19 +499,21 @@ namespace AutoRepairCRM.Database.Migrations
 
                     b.Navigation("CustomerCar");
 
+                    b.Navigation("ServiceState");
+
                     b.Navigation("ServiceType");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.ServiceEmployee", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.ServiceEmployee", b =>
                 {
-                    b.HasOne("AutoRepairCRM.Database.Models.Employee", "Employee")
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.Employee", "Employee")
                         .WithMany("ServicesEmployees")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AutoRepairCRM.Database.Models.Service", "Service")
-                        .WithMany()
+                    b.HasOne("AutoRepairCRM.Database.Data.Models.Service", "Service")
+                        .WithMany("ServicesEmployees")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -501,17 +574,27 @@ namespace AutoRepairCRM.Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Customer", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Car", b =>
                 {
                     b.Navigation("CustomerCars");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.CustomerCar", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Customer", b =>
+                {
+                    b.Navigation("CustomerCars");
+                });
+
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.CustomerCar", b =>
                 {
                     b.Navigation("Services");
                 });
 
-            modelBuilder.Entity("AutoRepairCRM.Database.Models.Employee", b =>
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Employee", b =>
+                {
+                    b.Navigation("ServicesEmployees");
+                });
+
+            modelBuilder.Entity("AutoRepairCRM.Database.Data.Models.Service", b =>
                 {
                     b.Navigation("ServicesEmployees");
                 });

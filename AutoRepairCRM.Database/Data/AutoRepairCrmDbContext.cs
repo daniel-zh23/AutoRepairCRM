@@ -1,4 +1,5 @@
-﻿using AutoRepairCRM.Database.Data.Models;
+﻿using AutoRepairCRM.Database.Data.Configuratons;
+using AutoRepairCRM.Database.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,8 @@ public class AutoRepairCrmDbContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.ApplyConfiguration(new AdminConfiguration());
+        
         builder.Entity<CustomerCar>()
             .HasKey(e => new { e.CarId, e.CustomerId });
         builder.Entity<ServiceEmployee>()

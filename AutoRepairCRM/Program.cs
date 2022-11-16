@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using AutoRepairCRM.Database.Data;
 using AutoRepairCRM.Database.Data.Models.Account;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,17 +12,9 @@ builder.Services.AddDbContext<AutoRepairCrmDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AutoRepairCrmDbContext>();
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Owner", policy =>
-    {
-        policy.RequireRole("Office");
-        policy.RequireRole("EditCustomers");
-    });
-});
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -53,6 +46,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
+app.MapControllerRoute(
+    name: "areaRoute",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
 
 app.Run();

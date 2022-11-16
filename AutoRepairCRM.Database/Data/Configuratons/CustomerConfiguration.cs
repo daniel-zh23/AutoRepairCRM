@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AutoRepairCRM.Database.Data.Configuratons;
 
-public class AdminConfiguration: IEntityTypeConfiguration<ApplicationUser>
+public class CustomerConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         var hasher = new PasswordHasher<ApplicationUser>();
         var user = new ApplicationUser()
         {
-            UserName = "Admin",
-            FirstName = "Admin",
-            LastName = "Admin",
-            NormalizedUserName = "ADMIN@ABV.BG",
-            Email = "admin@abv.bg",
-            NormalizedEmail = "ADMIN@ABV.BG",
+            UserName = "Customer",
+            FirstName = "Customer",
+            LastName = "Customer",
+            NormalizedUserName = "CUSTOMER",
+            Email = "customer@abv.bg",
+            NormalizedEmail = "CUSTOMER@ABV.BG",
             EmailConfirmed = true
         };
-        user.PasswordHash = hasher.HashPassword(user, "admin1234");
+        user.PasswordHash = hasher.HashPassword(user, "customer1234");
         builder.HasData(user);
     }
 }

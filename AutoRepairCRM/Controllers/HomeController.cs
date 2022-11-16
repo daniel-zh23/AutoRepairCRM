@@ -17,6 +17,15 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        if (User.IsInRole("Owner"))
+        {
+            return RedirectToAction("Index", "Home", new {Area = "Admin"});
+        }
+        else if (User.IsInRole("Customer"))
+        {
+            return RedirectToAction("GetPersonal", "Customer", new {Area = ""});
+        }
+
         return View();
     }
     

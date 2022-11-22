@@ -23,7 +23,7 @@
 else if (User.IsInRole("Customer"))
 {
     <li class="mt-2 mb-2 list-item">
-        <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Home", "Index", "pressed")">
+        <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Customer", "GetPersonal", "pressed")">
             <i class="fa-solid fa-house-chimney m-2">
             </i
             ><span>Home</span>

@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Database.Data.Configuratons;
 using AutoRepairCRM.Database.Data.Models;
+using AutoRepairCRM.Database.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -21,12 +22,11 @@ public class AutoRepairCrmDbContext : IdentityDbContext
     public DbSet<Service> Services { get; set; }
     public DbSet<ServiceEmployee> ServicesEmployees { get; set; }
     public DbSet<ServiceType> ServiceTypes { get; set; }
+    public DbSet<FuelType> FuelTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.ApplyConfiguration(new AdminConfiguration());
-        builder.ApplyConfiguration(new RolesConfiguration());
-        builder.ApplyConfiguration(new CustomerConfiguration());
+        builder.ApplyMockData();
 
         builder.Entity<CustomerCar>()
             .HasKey(e => new { e.CarId, e.CustomerId });

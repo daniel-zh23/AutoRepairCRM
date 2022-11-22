@@ -15,8 +15,10 @@ public class Car
     [MaxLength(DataConstants.Car.MaxCarModelLength)]
     [Required] public string Model { get; set; } = null!;
 
-    [MaxLength(DataConstants.Car.MaxCarEngineNumberLength)]
-    [Required] public string EngineNumber { get; set; } = null!;
+
+    [Required]
+    [MaxLength(DataConstants.Car.MaxCarYearLength)]
+    public string Year { get; set; } = null!;
     
     public IEnumerable<CustomerCar> CustomerCars { get; set; } = new List<CustomerCar>();
 }

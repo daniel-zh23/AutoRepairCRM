@@ -8,25 +8,32 @@ public class Service
 {
     [Key]
     public int Id { get; set; }
-    
-    [ForeignKey(nameof(ServiceState))]
-    public int ServiceStateId { get; set; }
+
+    [Required]
+    public bool IsFinished { get; set; }
 
     [ForeignKey(nameof(ServiceType))]
     public int ServiceTypeId { get; set; }
+    
+    [Required]
+    public int CarId { get; set; }
+    
+    [Required]
+    public int CustomerId { get; set; }
 
     [Required]
-    [Column(TypeName = DataConstants.Service.ServicePriceDecimal)]
-    public decimal Price { get; set; }
+    public DateTime DateStarted { get; set; }
     
-    public int CustomerCarId { get; set; }
+    public DateTime? DateEnded { get; set; }
+    
+    [Column(TypeName = DataConstants.Service.ServicePriceDecimal)]
+    public decimal? Price { get; set; }
 
-    [ForeignKey("CustomerId, CarId")] 
+    [ForeignKey($"{nameof(CarId)}, {nameof(CustomerId)}")]
     public CustomerCar CustomerCar { get; set; } = null!;
 
     public ServiceType ServiceType { get; set; } = null!;
     
-    public ServiceState ServiceState { get; set; } = null!;
     
     public IEnumerable<ServiceEmployee> ServicesEmployees { get; set; } = new List<ServiceEmployee>();
 }

@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Services" />
-      <Folder Include="Contracts" />
+      <ProjectReference Include="..\AutoRepairCRM.Database\AutoRepairCRM.Database.csproj" />
     </ItemGroup>
 
 </Project>

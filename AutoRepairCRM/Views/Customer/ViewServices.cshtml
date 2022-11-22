@@ -1,0 +1,24 @@
+﻿@model CarDetailsModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Details for: @Model.Make @Model.Model</h2>
+
+@foreach (var service in Model.Services)
+{
+    <div class="card">
+        <h5 class="card-header">@service.ServiceType</h5>
+        <div class="card-body">
+            <p class="card-text">Date of start: @service.StartDate</p>
+            <p class="card-text">State of service: @(service.ServiceState ? "Finished" : "In Progress")</p>
+            @if (service.ServiceState)
+            {
+                <p class="card-text">Date of end: @service.EndDate</p>
+                <p class="card-text">Price: @service.Price</p>
+            }
+        </div>
+    </div>
+}

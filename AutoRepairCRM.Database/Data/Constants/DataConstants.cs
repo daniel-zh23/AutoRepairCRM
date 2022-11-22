@@ -12,7 +12,7 @@ public static class DataConstants
     {
         public const int MaxCarMakeLength = 50;
         public const int MaxCarModelLength = 50;
-        public const int MaxCarEngineNumberLength = 100;
+        public const int MaxCarYearLength = 15;
     }
 
     /// <summary>

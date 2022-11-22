@@ -1,5 +1,8 @@
+using AutoRepairCRM.Core.Contracts;
+using AutoRepairCRM.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using AutoRepairCRM.Database.Data;
+using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models.Account;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,6 +18,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AutoRepairCrmDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

@@ -10,10 +10,26 @@ public class RolesConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
         builder.HasData(new List<IdentityRole>()
         {
-            new("Customer"),
-            new("Manager"),
-            new("Owner"),
-            new("OfficeEmployee"),
+            new()
+            {
+                Id = "MockRole1",
+                Name = "Customer"
+            },
+            new()
+            {
+                Id = "MockRole2",
+                Name = "Manager"
+            },
+            new()
+            {
+                Id = "MockRole3",
+                Name = "Owner"
+            },
+            new()
+            {
+                Id = "MockRole4",
+                Name = "OfficeEmployee"
+            },
         });
     }
 }

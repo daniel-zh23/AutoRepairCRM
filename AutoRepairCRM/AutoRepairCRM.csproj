@@ -24,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AutoRepairCRM.Core\AutoRepairCRM.Core.csproj" />
       <ProjectReference Include="..\AutoRepairCRM.Database\AutoRepairCRM.Database.csproj" />
     </ItemGroup>
 

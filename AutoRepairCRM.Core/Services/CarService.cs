@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Core.Models;
+using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,19 @@ public class CarService : ICarService
         _repo = repo;
     }
 
-    public async Task<IEnumerable<CarViewModel>> GetAllForCustomer(int customerId)
+    public async Task<ForCustomerResultModel> GetAllForCustomer(int customerId, int currPage = 1, int perPage = 1)
     {
-        return await _repo.AllReadonly<CustomerCar>()
-            .Where(cc => cc.CustomerId == customerId)
+        var result = new ForCustomerResultModel();
+        var cars = _repo.AllReadonly<CustomerCar>()
+            .Where(cc => cc.CustomerId == customerId);
+
+        result.TotalCars = await cars.CountAsync();
+        result.Cars = await cars
+            .Skip((currPage - 1) * perPage)
+            .Take(perPage)
             .Include(c => c.Car)
             .Include(c => c.FuelType)
-            .Select(c => new CarViewModel()
+            .Select(c => new CustomerCarViewModel()
             {
                 CarId = c.CarId,
                 CustomerId = c.CustomerId,
@@ -32,6 +39,8 @@ public class CarService : ICarService
                 Litre = c.EngineLitre,
                 FuelType = c.FuelType.Name
             }).ToListAsync();
+
+        return result;
     }
 
     public async Task<CarDetailsModel> GetServicesById(int carId, int customerId)
@@ -52,5 +61,23 @@ public class CarService : ICarService
                         Price = s.Price
                     })
             }).FirstAsync();
+    }
+
+    public async Task<IEnumerable<CarViewModel>> GetAllCarsAsync()
+    {
+        return await _repo.AllReadonly<Car>()
+            .Select(c => new CarViewModel()
+            {
+                Id = c.Id,
+                Make = c.Make,
+                Model = c.Model,
+                Year = c.Year
+            }).ToListAsync();
+    }
+
+    public async Task<bool> CarExists(int carId)
+    {
+        return await _repo.AllReadonly<Car>()
+            .AnyAsync(c => c.Id == carId);
     }
 }

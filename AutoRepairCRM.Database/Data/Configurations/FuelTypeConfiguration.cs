@@ -2,34 +2,34 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AutoRepairCRM.Database.Data.Configuratons;
+namespace AutoRepairCRM.Database.Data.Configurations;
 
-public class ServiceTypeConfiguration : IEntityTypeConfiguration<ServiceType>
+public class FuelTypeConfiguration : IEntityTypeConfiguration<FuelType>
 {
-    public void Configure(EntityTypeBuilder<ServiceType> builder)
+    public void Configure(EntityTypeBuilder<FuelType> builder)
     {
         builder.HasData(GetAll());
     }
 
-    public List<ServiceType> GetAll()
+    public List<FuelType> GetAll()
     {
-        return new List<ServiceType>()
+        return new List<FuelType>()
         {
             new()
             {
                 Id = 1,
-                Name = "Engine"
+                Name = "Petrol"
             },
             new()
             {
                 Id = 2,
-                Name = "Suspension"
+                Name = "Diesel"
             },
             new()
             {
                 Id = 3,
-                Name = "Drivetrain"
-            },
+                Name = "Electric"
+            }
         };
     }
 }

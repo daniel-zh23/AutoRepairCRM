@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AutoRepairCRM.Database.Data.Configuratons;
+namespace AutoRepairCRM.Database.Data.Configurations;
 
 public class RolesConfiguration : IEntityTypeConfiguration<IdentityRole>
 {
@@ -13,23 +13,33 @@ public class RolesConfiguration : IEntityTypeConfiguration<IdentityRole>
             new()
             {
                 Id = "MockRole1",
-                Name = "Customer"
+                Name = "Customer",
+                NormalizedName = "CUSTOMER"
             },
             new()
             {
                 Id = "MockRole2",
-                Name = "Manager"
+                Name = "Manager",
+                NormalizedName = "MANAGER"
             },
             new()
             {
                 Id = "MockRole3",
-                Name = "Owner"
+                Name = "Owner",
+                NormalizedName = "OWNER"
             },
             new()
             {
                 Id = "MockRole4",
-                Name = "OfficeEmployee"
+                Name = "OfficeEmployee",
+                NormalizedName = "OFFICEEMPLOYEE"
             },
+            new()
+            {
+                Id = "MockRole5",
+                Name = "Worker",
+                NormalizedName = "WORKER"
+            }
         });
     }
 }

@@ -29,9 +29,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Admin\Models" />
+      <Folder Include="Areas\Admin\Constants" />
+      <Folder Include="Areas\Customer" />
       <Folder Include="wwwroot\js\Account" />
       <Folder Include="wwwroot\lib\fontAwesome\dist\js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_Layout.cshtml" />
     </ItemGroup>
 
 </Project>

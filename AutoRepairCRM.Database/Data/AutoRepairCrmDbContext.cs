@@ -1,7 +1,5 @@
-﻿using AutoRepairCRM.Database.Data.Configuratons;
-using AutoRepairCRM.Database.Data.Models;
+﻿using AutoRepairCRM.Database.Data.Models;
 using AutoRepairCRM.Database.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

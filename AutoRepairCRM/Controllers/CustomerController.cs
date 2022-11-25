@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Extensions;
+using AutoRepairCRM.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,19 +18,25 @@ public class CustomerController : Controller
         _customerService = customerService;
     }
 
-    public async Task<IActionResult> GetPersonal()
+    public async Task<IActionResult> Personal()
     {
+        var query = new AllForCustomerModel();
         var customerId = await _customerService.GetCustomerId(User.Id());
-        var models = await _carService.GetAllForCustomer(customerId);
-
-        return View(models);
+        if (!await _customerService.Exists(customerId))
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        var models = await _carService.GetAllForCustomer(customerId, query.CurrentPage, AllForCustomerModel.CarsPerPage);
+        query.Cars = models.Cars;
+        query.TotalCars = models.TotalCars;
+        return View(query);
     }
 
     public async Task<IActionResult> ViewServices(int carId, int customerId)
     {
         if (!await _customerService.Exists(customerId))
         {
-            return RedirectToAction("GetPersonal");
+            return RedirectToAction("Personal");
         }
 
         var model = await _carService.GetServicesById(carId, customerId);

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AutoRepairCRM.Database.Data.Configuratons;
+namespace AutoRepairCRM.Database.Data.Configurations;
 
 public class UserConfiguration: IEntityTypeConfiguration<ApplicationUser>
 {

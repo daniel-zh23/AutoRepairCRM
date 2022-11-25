@@ -1,0 +1,60 @@
+﻿@model AllForCustomerModel
+
+@{
+    ViewBag.Title = "Personal Vehicles";
+    Layout = "_Layout";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (!Model.Cars.Any())
+{
+    <h3>No cars in database!</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th scope="col">Make</th>
+            <th scope="col">Model</th>
+            <th scope="col">Year</th>
+            <th scope="col">Litre Engine</th>
+            <th scope="col">License Plate</th>
+            <th scope="col">Fuel Type</th>
+        </tr>
+        @foreach (var car in Model.Cars)
+        {
+            <tr>
+                <td>@car.Make</td>
+                <td>@car.Model</td>
+                <td>@car.Year</td>
+                <td>@car.Litre</td>
+                <td>@car.LicensePlate</td>
+                <td>@car.FuelType</td>
+                <td>
+                    <a asp-controller="Customer" asp-action="ViewServices" class="btn btn-secondary" 
+                       asp-route-carId="@car.CarId" asp-route-customerId="@car.CustomerId">Services</a>
+                </td>
+            </tr>
+        }
+    </table>
+    
+    <div class="row mb-5">
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+               asp-controller="Customer"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage - 1 == 1 ? 1 : Model.CurrentPage - 1)">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary
+               @(Math.Ceiling((decimal)Model.TotalCars / AllForCustomerModel.CarsPerPage) == Model.CurrentPage || !Model.Cars.Any() ? "disabled" : string.Empty)"
+               asp-controller="Customer"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage + 1)">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+}

@@ -1,4 +1,4 @@
-﻿using AutoRepairCRM.Database.Data.Configuratons;
+﻿using AutoRepairCRM.Database.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairCRM.Database.Extensions;

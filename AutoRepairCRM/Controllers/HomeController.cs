@@ -23,7 +23,7 @@ public class HomeController : Controller
         }
         else if (User.IsInRole("Customer"))
         {
-            return RedirectToAction("GetPersonal", "Customer", new {Area = ""});
+            return RedirectToAction("Personal", "Customer", new {Area = ""});
         }
 
         return View();

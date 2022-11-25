@@ -1,12 +1,9 @@
-﻿namespace AutoRepairCRM.Database.Data.Constants;
+﻿namespace AutoRepairCRM.Areas.Admin.Constants;
 
-/// <summary>
-/// Data constants for all DTO models
-/// </summary>
 public static class DataConstants
 {
     /// <summary>
-    /// Constants for Car DTO model
+    /// Constants for Car input model
     /// </summary>
     public static class Car
     {
@@ -16,17 +13,19 @@ public static class DataConstants
     }
 
     /// <summary>
-    /// Constants for Person DTO model
+    /// Constants for Person input model
     /// </summary>
     public static class Person
     {
         public const int MaxCustomerFNameLength = 50;
+        public const int MinCustomerFNameLength = 2;
         public const int MaxCustomerLNameLength = 50;
+        public const int MinCustomerLNameLength = 2;
         public const int MaxCustomerPhoneLength = 50;
     }
     
     /// <summary>
-    /// Constants for Employee DTO model
+    /// Constants for Employee input model
     /// </summary>
     public static class Employee
     {
@@ -34,7 +33,7 @@ public static class DataConstants
     }
     
     /// <summary>
-    /// Constants for Service DTO model
+    /// Constants for Service input model
     /// </summary>
     public static class Service
     {
@@ -42,7 +41,7 @@ public static class DataConstants
     }
     
     /// <summary>
-    /// Constants for ServiceType DTO model
+    /// Constants for ServiceType input model
     /// </summary>
     public static class ServiceType
     {

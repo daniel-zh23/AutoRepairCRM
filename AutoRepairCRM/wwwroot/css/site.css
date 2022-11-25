@@ -48,8 +48,7 @@ body {
 }
 
 .container{
-  margin-top: 80px;
-  margin-left: 80px;
+  margin-top: 6rem;
 }
 
 .footer{
@@ -63,8 +62,9 @@ body {
 .list-group-item{
   background: #ecf0f3;
   border:none;
-  box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
+  box-shadow: 6px 6px 14px #cbced1, -6px -6px 14px #fff;
   padding: 0;
+  transition: box-shadow 0.2s;
 }
 
 .list-group-item:hover{

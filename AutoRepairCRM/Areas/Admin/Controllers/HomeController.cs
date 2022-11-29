@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoRepairCRM.Core.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoRepairCRM.Areas.Admin.Controllers;
@@ -9,8 +10,16 @@ namespace AutoRepairCRM.Areas.Admin.Controllers;
 [Authorize(Roles = "Owner")]
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IServiceService _serviceService;
+
+    public HomeController(IServiceService serviceService)
     {
-        return View();
+        _serviceService = serviceService;
+    }
+
+    public async Task<IActionResult> Dashboard()
+    {
+        var model = await _serviceService.GetActiveServices();
+        return View(model);
     }
 }

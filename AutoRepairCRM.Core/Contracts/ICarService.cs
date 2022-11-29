@@ -1,4 +1,4 @@
-﻿using AutoRepairCRM.Core.Models;
+﻿using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Database.Data.Models;
 
@@ -35,4 +35,8 @@ public interface ICarService
     /// <param name="carId">The id of the car you want to check</param>
     /// <returns>Boolean true or false</returns>
     Task<bool> CarExists(int carId);
+
+    Task<IEnumerable<FuelType>> GetFuelTypes();
+
+    Task<bool> FuelExists(int fuelId);
 }

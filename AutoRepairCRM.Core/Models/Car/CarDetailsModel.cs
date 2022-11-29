@@ -1,4 +1,4 @@
-﻿namespace AutoRepairCRM.Core.Models;
+﻿namespace AutoRepairCRM.Core.Models.Car;
 
 public class CarDetailsModel
 {

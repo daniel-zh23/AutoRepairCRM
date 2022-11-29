@@ -30,7 +30,6 @@
 
     <ItemGroup>
       <Folder Include="Areas\Admin\Constants" />
-      <Folder Include="Areas\Customer" />
       <Folder Include="wwwroot\js\Account" />
       <Folder Include="wwwroot\lib\fontAwesome\dist\js" />
     </ItemGroup>

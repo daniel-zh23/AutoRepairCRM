@@ -1,0 +1,51 @@
+﻿@model CustomerCarInputModel
+
+@{
+    ViewBag.Title = "Add car for customer";
+    Layout = "_AdminLayout";
+}
+
+<h2>@ViewBag.Title</h2>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post">
+        <input asp-for="@Model.CustomerId" type="hidden">
+    <div class="form-group">
+        <label asp-for="@Model.LicensePlate"></label>
+        <input asp-for="@Model.LicensePlate" type="text" class="form-control">
+        <span asp-validation-for="@Model.LicensePlate"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Litre"></label>
+        <input asp-for="@Model.Litre" type="text" class="form-control">
+        <span asp-validation-for="@Model.Litre"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.FuelTypeId"></label>
+        <select asp-for="@Model.FuelTypeId" class="form-control">
+            <option id="-1">Choose fuel type...</option>
+            @foreach (var fuel in ViewBag.FuelTypes)
+            {
+                <option value="@fuel.Id">@fuel.Name</option>
+            }
+        </select>
+        <span asp-validation-for="@Model.FuelTypeId"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.CarId"></label>
+        <select asp-for="@Model.CarId" class="form-control">
+            <option id="-1">Choose car...</option>
+            @foreach (var car in ViewBag.Cars)
+            {
+                <option value="@car.Id">@car.Make @car.Model: @car.Year</option>
+            }
+        </select>
+        <span asp-validation-for="@Model.CarId"></span>
+    </div>
+    <div class="text-center mt-4">
+        <input type="submit" class="btn btn-primary" value="Create"/>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

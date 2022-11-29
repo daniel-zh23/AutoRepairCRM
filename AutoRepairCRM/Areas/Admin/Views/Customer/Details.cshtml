@@ -1,0 +1,53 @@
+﻿@model CustomerDetailsModel
+
+@{
+    ViewBag.Title = "Customer";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>Customer: @Model.FirstName @Model.LastName</h2>
+    </div>
+    <div class="col d-flex justify-content-md-end">
+        <a asp-controller="Customer" asp-action="AddCar" class="btn btn-info"
+           asp-route-id="@Model.Id">
+            Add car
+        </a>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th scope="col">Make</th>
+        <th scope="col">Model</th>
+        <th scope="col">Year</th>
+        <th scope="col">LicensePlate</th>
+        <th scope="col">FuelType</th>
+        <th scope="col">Litre</th>
+    </tr>
+    @foreach (var car in Model.Cars)
+    {
+        <tr>
+            <td>@car.Make</td>
+            <td>@car.Model</td>
+            <td>@car.Year</td>
+            <td>@car.LicensePlate</td>
+            <td>@car.FuelType</td>
+            <td>@car.Litre</td>
+            <td>
+                <a asp-area="" asp-controller="Customer" asp-action="ViewServices" class="btn btn-secondary"
+                   asp-route-carId="@car.CarId"
+                   asp-route-customerId="@car.CustomerId">
+                    Services
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Customer" asp-action="Edit" class="btn btn-info"
+                   asp-route-carId="@car.CarId"
+                   asp-route-customerId="@car.CustomerId">
+                    Edit
+                </a>
+            </td>
+        </tr>
+    }
+</table>

@@ -11,13 +11,13 @@ namespace AutoRepairCRM.Core.Services;
 
 public class CustomerService : ICustomerService
 {
-    private IRepository _repo;
-    private UserManager<ApplicationUser> _userManager;
+    private readonly IRepository _repo;
+    private readonly IAccountService _accountService;
 
-    public CustomerService(IRepository repo, UserManager<ApplicationUser> userManager)
+    public CustomerService(IRepository repo, IAccountService accountService)
     {
         _repo = repo;
-        _userManager = userManager;
+        _accountService = accountService;
     }
 
     public async Task<CustomerResultModel> All(string? searchTerm = null, int currPage = 1, int perPage = 1)
@@ -81,34 +81,86 @@ public class CustomerService : ICustomerService
     /// Adds customer in database and creates it's account
     /// </summary>
     /// <param name="model">CustomerInput model to create the user and the customer</param>
-    /// <returns>True or false if completed successfully</returns>
-    public async Task<bool> Add(CustomerInputModel model)
+    /// <returns>The id of the newly created user</returns>
+    public async Task<int> Add(CustomerInputModel model)
     {
-        var user = new ApplicationUser()
+        ApplicationUser user;
+        try
         {
-            UserName = $"{model.FirstName} {model.LastName}",
-            NormalizedUserName = $"{model.FirstName} {model.LastName}".ToUpper(),
-            FirstName = model.FirstName,
-            LastName = model.LastName,
-            Email = model.Email,
-            NormalizedEmail = model.Email.ToUpper(),
-            PhoneNumber = model.Phone
-        };
-        
-        var result = await _userManager.CreateAsync(user, $"{model.FirstName}{model.Phone}.");
-        if (!result.Succeeded)
-        {
-            return false;
+            user = await _accountService.CreateCustomer(model);
         }
-        await _userManager.AddToRoleAsync(user, "Customer");
+        catch (Exception)
+        {
+            return -1;
+        }
         var customer = new Customer()
         {
             User = user
         };
-
         await _repo.AddAsync(customer);
         await _repo.SaveChangesAsync();
         
+        return customer.Id;
+    }
+
+    /// <summary>
+    /// Gets detailed customer information
+    /// </summary>
+    /// <param name="id">Specifies customer id</param>
+    /// <returns>CustomerDetailsModel</returns>
+    public async Task<CustomerDetailsModel> GetCustomerDetails(int id)
+    {
+        return await _repo.AllReadonly<Customer>()
+            .Where(c => c.Id == id)
+            .Select(c => new CustomerDetailsModel()
+            {
+                Id = c.Id,
+                Email = c.User.Email,
+                FirstName = c.User.FirstName,
+                LastName = c.User.LastName,
+                Phone = c.User.PhoneNumber,
+                Cars = c.CustomerCars.Select(cc => new CustomerCarViewModel()
+                {
+                    CarId = cc.CarId,
+                    CustomerId = cc.CustomerId,
+                    FuelType = cc.FuelType.Name,
+                    LicensePlate = cc.LicensePlate,
+                    Litre = cc.EngineLitre,
+                    Make = cc.Car.Make,
+                    Model = cc.Car.Model,
+                    Year = cc.Car.Year
+                })
+            })
+            .FirstAsync();
+    }
+
+    public async Task<bool> Update(int id, CustomerInputModel model)
+    {
+        var customer = await _repo.AllReadonly<Customer>()
+            .Where(c => c.Id == id)
+            .FirstAsync();
+        var user = await _repo.GetByIdAsync<ApplicationUser>(customer.UserId);
+        user.FirstName = model.FirstName;
+        user.LastName = model.LastName;
+        user.PhoneNumber = model.Phone;
+        user.Email = model.Email;
+
+        await _repo.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> AddCustomerCar(CustomerCarInputModel model)
+    {
+        await _repo.AddAsync(new CustomerCar()
+        {
+            CarId = model.CarId,
+            CustomerId = model.CustomerId,
+            EngineLitre = model.Litre,
+            FuelTypeId = model.FuelTypeId,
+            LicensePlate = model.LicensePlate
+        });
+        
+        await _repo.SaveChangesAsync();
         return true;
     }
 }

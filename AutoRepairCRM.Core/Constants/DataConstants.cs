@@ -2,6 +2,14 @@
 
 public static class DataConstants
 {
+    public static class Roles
+    {
+        public const string Customer = "Customer";
+        public const string Manager = "Manager";
+        public const string Owner = "Owner";
+        public const string OfficeEmployee = "OfficeEmployee";
+    }
+
     /// <summary>
     /// Constants for Car input model
     /// </summary>

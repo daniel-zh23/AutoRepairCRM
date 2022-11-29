@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AutoRepairCRM.Core.Models.ActiveServiceViewModel>
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "_AdminLayout";
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="table">
+    <tr>
+        <th scope="col">Type</th>
+        <th scope="col">CarLicense</th>
+        <th scope="col">CustomerPhone</th>
+        <th scope="col">DateStarted</th>
+        <th scope="col">EmployeeName</th>
+    </tr>
+    @foreach (var service in Model)
+    {
+        <tr>
+            <td>@service.Type</td>
+            <td>@service.CarLicense</td>
+            <td>@service.CustomerPhone</td>
+            <td>@service.DateStarted</td>
+            <td>@service.EmployeeName</td>
+            <td>
+                <a asp-controller="Customer" asp-action="Details" class="btn btn-success"
+                   asp-route-id="@service.Id">
+                    Complete
+                </a>
+            </td>
+        </tr>
+    }
+</table>

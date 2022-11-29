@@ -6,9 +6,9 @@ public class ServiceViewModel
 
     public string ServiceType { get; set; } = null!;
 
-    public DateTime StartDate { get; set; }
+    public string StartDate { get; set; } = null!;
 
-    public DateTime? EndDate { get; set; }
+    public string? EndDate { get; set; }
 
     public decimal? Price { get; set; }
 }

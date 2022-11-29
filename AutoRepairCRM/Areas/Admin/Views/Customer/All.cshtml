@@ -48,9 +48,15 @@ else
                 <td>@customer.LastName</td>
                 <td>@customer.Phone</td>
                 <td>
-                    <a asp-controller="Customer" asp-action="All" class="btn btn-secondary"
+                    <a asp-controller="Customer" asp-action="Details" class="btn btn-secondary"
                        asp-route-id="@customer.Id">
-                        Get details
+                        Show cars
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Customer" asp-action="Edit" class="btn btn-info"
+                       asp-route-id="@customer.Id">
+                        Edit
                     </a>
                 </td>
             </tr>

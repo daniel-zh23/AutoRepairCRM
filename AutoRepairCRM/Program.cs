@@ -26,6 +26,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

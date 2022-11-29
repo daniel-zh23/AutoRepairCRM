@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Core.Models;
+using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models;
@@ -56,8 +57,8 @@ public class CarService : ICarService
                     {
                         ServiceType = s.ServiceType.Name,
                         ServiceState = s.IsFinished,
-                        StartDate = s.DateStarted,
-                        EndDate = s.DateEnded,
+                        StartDate = s.DateStarted.ToString("dd-MM-yyyy"),
+                        EndDate = s.DateEnded == null ? "" : s.DateEnded.Value.ToString("dd-MM-yyyy"),
                         Price = s.Price
                     })
             }).FirstAsync();
@@ -79,5 +80,16 @@ public class CarService : ICarService
     {
         return await _repo.AllReadonly<Car>()
             .AnyAsync(c => c.Id == carId);
+    }
+
+    public async Task<IEnumerable<FuelType>> GetFuelTypes()
+    {
+        return await _repo.AllReadonly<FuelType>().ToListAsync();
+    }
+
+    public async Task<bool> FuelExists(int fuelId)
+    {
+        return await _repo.AllReadonly<FuelType>()
+            .AnyAsync(f => f.Id == fuelId);
     }
 }

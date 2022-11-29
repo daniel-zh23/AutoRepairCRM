@@ -19,7 +19,7 @@ public class HomeController : Controller
     {
         if (User.IsInRole("Owner"))
         {
-            return RedirectToAction("Index", "Home", new {Area = "Admin"});
+            return RedirectToAction("Dashboard", "Home", new {Area = "Admin"});
         }
         else if (User.IsInRole("Customer"))
         {

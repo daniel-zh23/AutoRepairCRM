@@ -28,9 +28,11 @@ builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.AccessDeniedPath = "/Account/AccessDenied";
     options.LoginPath = "/Account/Login";
 });
 

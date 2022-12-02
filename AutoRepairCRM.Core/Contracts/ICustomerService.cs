@@ -1,4 +1,4 @@
-﻿using AutoRepairCRM.Core.Models;
+﻿using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 
 namespace AutoRepairCRM.Core.Contracts;
@@ -42,4 +42,6 @@ public interface ICustomerService
     Task<CustomerCarInputModel> GetCustomerCar(int carId, int customerId);
     
     Task<bool> UpdateCustomerCar(CustomerCarInputModel model);
+    
+    Task<bool> AddCustomerCarService(CarServiceInputModel model);
 }

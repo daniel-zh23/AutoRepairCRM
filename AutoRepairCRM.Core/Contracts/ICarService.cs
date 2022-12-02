@@ -39,4 +39,8 @@ public interface ICarService
     Task<IEnumerable<FuelType>> GetFuelTypes();
 
     Task<bool> FuelExists(int fuelId);
+    
+    Task<bool> ServiceTypeExists(int fuelId);
+    
+    Task<IEnumerable<ServiceType>> GetServiceTypes();
 }

@@ -20,5 +20,6 @@ public static class ModelBuilderExtension
         builder.ApplyConfiguration(new ServiceConfiguration());
         builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new UserRolesConfiguration());
+        builder.ApplyConfiguration(new EmployeeConfiguration());
     }
 }

@@ -92,4 +92,15 @@ public class CarService : ICarService
         return await _repo.AllReadonly<FuelType>()
             .AnyAsync(f => f.Id == fuelId);
     }
+
+    public async Task<bool> ServiceTypeExists(int fuelId)
+    {
+        return await _repo.AllReadonly<ServiceType>()
+            .AnyAsync(f => f.Id == fuelId);
+    }
+
+    public async Task<IEnumerable<ServiceType>> GetServiceTypes()
+    {
+        return await _repo.AllReadonly<ServiceType>().ToListAsync();
+    }
 }

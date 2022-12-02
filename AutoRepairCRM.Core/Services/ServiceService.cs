@@ -25,7 +25,7 @@ public class ServiceService : IServiceService
                 CarLicense = s.CustomerCar.LicensePlate,
                 CustomerPhone = s.CustomerCar.Customer.User.PhoneNumber,
                 DateStarted = s.DateStarted.ToString("dd-MM-yyyy"),
-                EmployeeName = string.Join(", ", s.ServicesEmployees.Select(e => e.Employee.FirstName)),
+                EmployeeName = string.Join(", ", s.ServicesEmployees.Select(e => e.Employee.User!.FirstName)),
                 Type = s.ServiceType.Name
             })
             .ToListAsync();

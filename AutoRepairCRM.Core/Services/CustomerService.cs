@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Core.Models;
+using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models;
@@ -186,6 +187,33 @@ public class CustomerService : ICustomerService
         customerCar.LicensePlate = model.LicensePlate;
         customerCar.CarId = model.CarId;
 
+        await _repo.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> AddCustomerCarService(CarServiceInputModel model)
+    {
+        var service = new Service()
+        {
+            CarId = model.CarId,
+            CustomerId = model.CustomerId,
+            DateStarted = model.DateStarted,
+            IsFinished = false,
+            ServiceTypeId = model.ServiceTypeId
+        };
+
+        var services = new List<ServiceEmployee>();
+        foreach (var emp in model.Employees)
+        {
+            services.Add(new ServiceEmployee()
+            {
+                EmployeeId = emp,
+                Service = service
+            });
+        }
+
+        await _repo.AddRangeAsync(services);
+        await _repo.AddAsync(service);
         await _repo.SaveChangesAsync();
         return true;
     }

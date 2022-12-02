@@ -1,4 +1,5 @@
 ﻿using AutoRepairCRM.Core.Contracts;
+using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,11 +12,13 @@ public class CustomerController : Controller
 {
     private ICarService _carService;
     private ICustomerService _customerService;
+    private IEmployeeService _employeeService;
 
-    public CustomerController(ICarService carService, ICustomerService customerService)
+    public CustomerController(ICarService carService, ICustomerService customerService, IEmployeeService employeeService)
     {
         _carService = carService;
         _customerService = customerService;
+        _employeeService = employeeService;
     }
     
     [HttpGet]
@@ -213,4 +216,48 @@ public class CustomerController : Controller
 
     }
 
+    [HttpGet]
+    public async Task<IActionResult> AddService(int carId, int customerId)
+    {
+        ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+        ViewBag.Employees = await _employeeService.GetEmployees();
+        var model = new CarServiceInputModel();
+        return View("AddService", model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddService(CarServiceInputModel model)
+    {
+        if (!await _carService.CarExists(model.CarId))
+        {
+            ModelState.AddModelError(string.Empty, "Car is not valid.");
+        }
+
+        if (!await _customerService.Exists(model.CustomerId))
+        {
+            ModelState.AddModelError(string.Empty, "Customer is not valid.");
+        }
+        
+        //TODO: Employee validation
+
+        model.DateStarted = DateTime.UtcNow;
+        
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+            return View("AddService", model);
+        }
+
+        var isFinished = await _customerService.AddCustomerCarService(model);
+        if (isFinished)
+        {
+            return RedirectToAction("Details", new{id = model.CustomerId});
+        }
+        
+        ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+        ViewBag.Employees = await _employeeService.GetEmployees();
+        ModelState.AddModelError(nameof(model), "Server error!");
+        return View("AddService", model);
+
+    }
 }

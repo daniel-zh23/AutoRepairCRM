@@ -1,0 +1,40 @@
+﻿@model CarServiceInputModel
+
+@{
+    ViewBag.Title = "Add service";
+}
+
+<h2>@ViewBag.Title</h2>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post">
+        <input asp-for="@Model.CustomerId" type="hidden">
+        <input asp-for="@Model.CarId" type="hidden">
+        <div class="form-group">
+            <label asp-for="@Model.ServiceTypeId"></label>
+            <select asp-for="@Model.ServiceTypeId" class="form-control">
+                <option id="-1">Choose service type...</option>
+                @foreach (var type in ViewBag.ServiceTypes)
+                {
+                    <option value="@type.Id">@type.Name</option>
+                }
+            </select>
+            <span asp-validation-for="@Model.ServiceTypeId"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Employees">Assign employees</label>
+            <select multiple class="form-control" asp-for="@Model.Employees">
+                @foreach (var employee in ViewBag.Employees)
+                {
+                    <option value="@employee.Id">@employee.FirstName @employee.LastName</option>
+                }
+            </select>
+            <span asp-validation-for="@Model.Employees"></span>
+          </div>
+        <div class="text-center mt-4">
+        <input type="submit" class="btn btn-primary" value="Create"/>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

@@ -4,7 +4,6 @@ using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models;
 using AutoRepairCRM.Database.Data.Models.Account;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AutoRepairCRM.Core.Services;
@@ -160,6 +159,33 @@ public class CustomerService : ICustomerService
             LicensePlate = model.LicensePlate
         });
         
+        await _repo.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<CustomerCarInputModel> GetCustomerCar(int carId, int customerId)
+    {
+        return await _repo.AllReadonly<CustomerCar>()
+            .Where(cc => cc.CarId == carId && cc.CustomerId == customerId)
+            .Select(cc => new CustomerCarInputModel()
+            {
+                CarId = cc.CarId,
+                CustomerId = cc.CustomerId,
+                FuelTypeId = cc.FuelTypeId,
+                LicensePlate = cc.LicensePlate,
+                Litre = cc.EngineLitre
+            })
+            .FirstAsync();
+    }
+
+    public async Task<bool> UpdateCustomerCar(CustomerCarInputModel model)
+    {
+        var customerCar = await _repo.GetByIdsAsync<CustomerCar>(new object[] {model.CarId, model.CustomerId});
+        customerCar.FuelTypeId = model.FuelTypeId;
+        customerCar.EngineLitre = model.Litre;
+        customerCar.LicensePlate = model.LicensePlate;
+        customerCar.CarId = model.CarId;
+
         await _repo.SaveChangesAsync();
         return true;
     }

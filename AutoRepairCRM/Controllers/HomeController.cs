@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using AutoRepairCRM.Core.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using AutoRepairCRM.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -8,30 +9,26 @@ namespace AutoRepairCRM.Controllers;
 [Authorize]
 public class HomeController : Controller
 {
+    private readonly IServiceService _serviceService;
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IServiceService serviceService)
     {
+        _serviceService = serviceService;
         _logger = logger;
     }
 
     public IActionResult Index()
     {
-        if (User.IsInRole("Owner"))
-        {
-            return RedirectToAction("Dashboard", "Home", new {Area = "Admin"});
-        }
-        else if (User.IsInRole("Customer"))
-        {
-            return RedirectToAction("Personal", "Customer", new {Area = ""});
-        }
-
-        return View();
+        return User.IsInRole("Owner")
+            ? RedirectToAction("Dashboard")
+            : RedirectToAction("Personal", "Home", new {Area = "Customers"});
     }
     
-    public IActionResult Test()
+    public async Task<IActionResult> Dashboard()
     {
-        return View("Privacy");
+        var model = await _serviceService.GetActiveServices();
+        return View(model);
     }
     
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

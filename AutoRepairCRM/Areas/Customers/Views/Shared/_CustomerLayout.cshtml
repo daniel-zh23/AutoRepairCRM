@@ -18,17 +18,10 @@
         <div class="position-sticky">
             <ul class="list-group list-group-flush mx-2 mt-4 navbar-nav">
                 <li class="mt-2 mb-2 list-item">
-                        <a asp-controller="Customer" asp-action="Personal" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Customer", "Personal", "pressed")">
+                        <a asp-area="Customers" asp-controller="Home" asp-action="Personal" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Home", "Personal", "pressed")">
                             <i class="fa-solid fa-house-chimney m-2">
                             </i
                             ><span>Home</span>
-                        </a>
-                    </li>
-                    <li class="mt-2 mb-2 list-item">
-                        <a asp-controller="Home" asp-action="Test" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Home", "Test", "pressed")">
-                            <i class="fa-solid fa-shield m-2">
-                            </i
-                            ><span>Privacy</span>
                         </a>
                     </li>
             </ul>

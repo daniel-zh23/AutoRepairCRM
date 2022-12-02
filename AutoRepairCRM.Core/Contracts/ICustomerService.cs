@@ -38,4 +38,8 @@ public interface ICustomerService
     Task<bool> Update(int id, CustomerInputModel model);
 
     Task<bool> AddCustomerCar(CustomerCarInputModel model);
+    
+    Task<CustomerCarInputModel> GetCustomerCar(int carId, int customerId);
+    
+    Task<bool> UpdateCustomerCar(CustomerCarInputModel model);
 }

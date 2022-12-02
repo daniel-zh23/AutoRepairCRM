@@ -1,8 +1,9 @@
-﻿@model AllForCustomerModel
+﻿@using AutoRepairCRM.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AutoRepairCRM.Models.AllForCustomerModel
 
 @{
     ViewBag.Title = "Personal Vehicles";
-    Layout = "_Layout";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -31,7 +32,7 @@ else
                 <td>@car.LicensePlate</td>
                 <td>@car.FuelType</td>
                 <td>
-                    <a asp-controller="Customer" asp-action="ViewServices" class="btn btn-secondary" 
+                    <a asp-controller="Home" asp-action="ViewServices" class="btn btn-secondary" 
                        asp-route-carId="@car.CarId" asp-route-customerId="@car.CustomerId">Services</a>
                 </td>
             </tr>

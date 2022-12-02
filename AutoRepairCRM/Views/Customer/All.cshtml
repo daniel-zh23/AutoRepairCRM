@@ -1,4 +1,4 @@
-﻿@model AllCustomerQueryModel
+﻿@model AutoRepairCRM.Models.AllCustomerQueryModel
 
 @{
     ViewBag.Title = "Cutomers";
@@ -47,17 +47,15 @@ else
                 <td>@customer.FirstName</td>
                 <td>@customer.LastName</td>
                 <td>@customer.Phone</td>
-                <td>
+                <td class="text-sm-center">
                     <a asp-controller="Customer" asp-action="Details" class="btn btn-secondary"
                        asp-route-id="@customer.Id">
                         Show cars
                     </a>
-                </td>
-                <td>
                     <a asp-controller="Customer" asp-action="Edit" class="btn btn-info"
-                       asp-route-id="@customer.Id">
-                        Edit
-                    </a>
+                                           asp-route-id="@customer.Id">
+                                            Edit
+                                        </a>
                 </td>
             </tr>
         }

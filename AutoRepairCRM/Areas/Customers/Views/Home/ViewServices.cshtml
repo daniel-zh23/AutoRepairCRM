@@ -1,8 +1,7 @@
-﻿@model CarDetailsModel
+﻿@model AutoRepairCRM.Core.Models.Car.CarDetailsModel
 
 @{
     ViewBag.Title = "Details for car";
-    Layout = User.IsInRole("Owner") ? "_AdminLayout" : "_Layout";
 }
 
 <h2>Details for: @Model.Make @Model.Model</h2>

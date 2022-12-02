@@ -29,13 +29,31 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Admin\Constants" />
       <Folder Include="wwwroot\js\Account" />
       <Folder Include="wwwroot\lib\fontAwesome\dist\js" />
     </ItemGroup>
 
     <ItemGroup>
       <_ContentIncludedByDefault Remove="Areas\Admin\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Employee\All.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Customer\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Customer\AddCar.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Customer\All.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Customer\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\Customer\Edit.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Customers\Views\Home\Personal.cshtml" />
+      <AdditionalFiles Include="Areas\Customers\Views\Home\ViewServices.cshtml" />
+      <AdditionalFiles Include="Views\Customer\Add.cshtml" />
+      <AdditionalFiles Include="Views\Customer\AddCar.cshtml" />
+      <AdditionalFiles Include="Views\Customer\All.cshtml" />
+      <AdditionalFiles Include="Views\Customer\Details.cshtml" />
+      <AdditionalFiles Include="Views\Customer\Edit.cshtml" />
+      <AdditionalFiles Include="Views\Employee\Add.cshtml" />
+      <AdditionalFiles Include="Views\Employee\All.cshtml" />
     </ItemGroup>
 
 </Project>

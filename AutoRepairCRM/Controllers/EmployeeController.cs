@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AutoRepairCRM.Areas.Admin.Controllers;
+namespace AutoRepairCRM.Controllers;
 
-[Area("Admin")]
-[Route("/Admin/[Controller]/[Action]/{id?}")]
 [Authorize(Roles = "Owner, Manager")]
 public class EmployeeController : Controller
 {

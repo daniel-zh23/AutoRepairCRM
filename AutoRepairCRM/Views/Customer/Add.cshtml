@@ -1,15 +1,13 @@
-﻿@model CustomerInputModel
+﻿@model AutoRepairCRM.Core.Models.Customer.CustomerInputModel
 
 @{
-    ViewBag.Title = "Add Employee";
     Layout = "_AdminLayout";
 }
 
-<h2>@ViewBag.Title</h2>
 <div class="col-6 mx-auto">
     <h2>@ViewBag.Title</h2>
     <div asp-validation-summary="All" class="text-danger"></div>
-    <form method="post" asp-area="Admin">
+    <form method="post">
         <div class="form-group mt-3">
             <label asp-for="@Model.FirstName"></label>
             <input asp-for="@Model.FirstName" class="form-control">
@@ -21,12 +19,17 @@
             <span asp-validation-for="@Model.LastName" class="small text-danger"></span>
         </div>
         <div class="form-group mt-3">
+            <label asp-for="@Model.Email"></label>
+            <input asp-for="@Model.Email" type="email" class="form-control">
+            <span asp-validation-for="@Model.Email" class="small text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
             <label asp-for="@Model.Phone"></label>
             <input asp-for="@Model.Phone" class="form-control">
             <span asp-validation-for="@Model.Phone" class="small text-danger"></span>
         </div>
         <div class="text-center mt-4">
-            <input type="submit" class="btn btn-primary" value="Save"/>
+            <input type="submit" class="btn btn-primary" value="Create"/>
         </div>
     </form>
 </div>

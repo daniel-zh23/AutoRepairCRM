@@ -26,4 +26,10 @@ public class EmployeeService : IEmployeeService
             })
             .ToListAsync();
     }
+
+    public async Task<bool> Exists(int id)
+    {
+        return await _repo.AllReadonly<Employee>()
+            .AnyAsync(e => e.Id == id);
+    }
 }

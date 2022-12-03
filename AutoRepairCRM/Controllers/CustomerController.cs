@@ -237,14 +237,21 @@ public class CustomerController : Controller
         {
             ModelState.AddModelError(string.Empty, "Customer is not valid.");
         }
-        
-        //TODO: Employee validation
+
+        foreach (var emp in model.Employees)
+        {
+            if (!await _employeeService.Exists(emp))
+            {
+                ModelState.AddModelError(string.Empty, "Employee is not valid.");
+            }
+        }
 
         model.DateStarted = DateTime.UtcNow;
         
         if (!ModelState.IsValid)
         {
             ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+            ViewBag.Employees = await _employeeService.GetEmployees();
             return View("AddService", model);
         }
 

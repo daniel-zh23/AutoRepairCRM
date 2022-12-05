@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Core.Models.Customer;
+using AutoRepairCRM.Core.Models.Employee;
 using AutoRepairCRM.Database.Data.Models.Account;
 using Microsoft.AspNetCore.Identity;
 
@@ -37,8 +38,28 @@ public class AccountService : IAccountService
         return user;
     }
 
-    public Task<ApplicationUser> CreateEmployee(CustomerInputModel model, string position)
+    public async Task<ApplicationUser> CreateEmployee(EmployeeInputModel model)
     {
-        throw new NotImplementedException();
+        var user = new ApplicationUser()
+        {
+            UserName = $"{model.FirstName} {model.LastName}",
+            NormalizedUserName = $"{model.FirstName} {model.LastName}".ToUpper(),
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            PhoneNumber = model.Phone
+        };
+        
+        var result = await _userManager.CreateAsync(user, $"{model.FirstName}{model.Phone}.");
+        if (!result.Succeeded)
+        {
+            throw new ArgumentException("Error creating employee account!");
+        }
+
+        foreach (var role in model.Roles)
+        {
+            await _userManager.AddToRoleAsync(user, role);
+        }
+
+        return user;
     }
 }

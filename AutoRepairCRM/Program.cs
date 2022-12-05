@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoRepairCRM.Database.Data;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models.Account;
+using AutoRepairCRM.ModelBinders;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,13 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AutoRepairCrmDbContext>();
-builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<ICarService, CarService>();

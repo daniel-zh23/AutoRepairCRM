@@ -1,4 +1,6 @@
-﻿namespace AutoRepairCRM.Core.Models.Car;
+﻿using AutoRepairCRM.Core.Models.Services;
+
+namespace AutoRepairCRM.Core.Models.Car;
 
 public class CarDetailsModel
 {
@@ -6,5 +8,5 @@ public class CarDetailsModel
 
     public string Model { get; set; } = null!;
 
-    public IEnumerable<ServiceViewModel> Services { get; set; } = new List<ServiceViewModel>();
+    public IEnumerable<CustomerServiceViewModel> Services { get; set; } = new List<CustomerServiceViewModel>();
 }

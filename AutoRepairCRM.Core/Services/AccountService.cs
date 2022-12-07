@@ -19,7 +19,7 @@ public class AccountService : IAccountService
     {
         var user = new ApplicationUser()
         {
-            UserName = $"{model.FirstName} {model.LastName}",
+            UserName = model.Email,
             NormalizedUserName = $"{model.FirstName} {model.LastName}".ToUpper(),
             FirstName = model.FirstName,
             LastName = model.LastName,
@@ -42,9 +42,11 @@ public class AccountService : IAccountService
     {
         var user = new ApplicationUser()
         {
-            UserName = $"{model.FirstName} {model.LastName}",
+            UserName = model.Email,
             NormalizedUserName = $"{model.FirstName} {model.LastName}".ToUpper(),
             FirstName = model.FirstName,
+            Email = model.Email,
+            NormalizedEmail = model.Email.ToUpper(),
             LastName = model.LastName,
             PhoneNumber = model.Phone
         };
@@ -55,11 +57,15 @@ public class AccountService : IAccountService
             throw new ArgumentException("Error creating employee account!");
         }
 
-        foreach (var role in model.Roles)
-        {
-            await _userManager.AddToRoleAsync(user, role);
-        }
+
+            await _userManager.AddToRoleAsync(user, model.Roles);
+
 
         return user;
+    }
+
+    public async Task<IEnumerable<string>> GetRolesForUser(ApplicationUser user)
+    {
+        return await _userManager.GetRolesAsync(user);
     }
 }

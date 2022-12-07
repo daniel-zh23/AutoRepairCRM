@@ -2,6 +2,7 @@
 using AutoRepairCRM.Core.Models;
 using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
+using AutoRepairCRM.Core.Models.Services;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -53,7 +54,7 @@ public class CarService : ICarService
                 Make = cc.Car.Make,
                 Model = cc.Car.Model,
                 Services = cc.Services
-                    .Select(s => new ServiceViewModel()
+                    .Select(s => new CustomerServiceViewModel()
                     {
                         ServiceType = s.ServiceType.Name,
                         ServiceState = s.IsFinished,

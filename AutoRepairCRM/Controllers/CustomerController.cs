@@ -1,4 +1,5 @@
 ﻿using AutoRepairCRM.Core.Contracts;
+using AutoRepairCRM.Core.Models;
 using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 using AutoRepairCRM.Models;
@@ -22,16 +23,16 @@ public class CustomerController : Controller
     }
     
     [HttpGet]
-    public async Task<IActionResult> All([FromQuery] AllCustomerQueryModel query)
+    public async Task<IActionResult> All([FromQuery] AllCustomerQueryModel customerQuery)
     {
         var models = await _customerService.All(
-            query.SearchTerm,
-            query.CurrentPage,
-            AllCustomerQueryModel.CustomersPerPage);
+            customerQuery.SearchTerm,
+            customerQuery.CurrentPage,
+            AllCustomerQueryModel.PeoplePerPage);
 
-        query.Customers = models.Customers;
-        query.TotalCustomers = models.TotalCustomers;
-        return View(query);
+        customerQuery.People = models.People;
+        customerQuery.Total = models.Total;
+        return View(customerQuery);
     }
 
     [HttpGet]
@@ -220,7 +221,7 @@ public class CustomerController : Controller
     public async Task<IActionResult> AddService(int carId, int customerId)
     {
         ViewBag.ServiceTypes = await _carService.GetServiceTypes();
-        ViewBag.Employees = await _employeeService.GetEmployees();
+        ViewBag.Employees = await _employeeService.AllForForm();
         var model = new CarServiceInputModel();
         return View("AddService", model);
     }
@@ -251,7 +252,7 @@ public class CustomerController : Controller
         if (!ModelState.IsValid)
         {
             ViewBag.ServiceTypes = await _carService.GetServiceTypes();
-            ViewBag.Employees = await _employeeService.GetEmployees();
+            ViewBag.Employees = await _employeeService.AllForForm();
             return View("AddService", model);
         }
 
@@ -262,7 +263,7 @@ public class CustomerController : Controller
         }
         
         ViewBag.ServiceTypes = await _carService.GetServiceTypes();
-        ViewBag.Employees = await _employeeService.GetEmployees();
+        ViewBag.Employees = await _employeeService.AllForForm();
         ModelState.AddModelError(nameof(model), "Server error!");
         return View("AddService", model);
 

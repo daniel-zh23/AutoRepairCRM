@@ -19,7 +19,7 @@ public class UserConfiguration: IEntityTypeConfiguration<ApplicationUser>
         var admin = new ApplicationUser()
         {
             Id = "MockUser1",
-            UserName = "Admin ADMIN",
+            UserName = "admin@abv.bg",
             FirstName = "Admin",
             LastName = "Admin",
             NormalizedUserName = "ADMIN ADMIN",
@@ -30,7 +30,7 @@ public class UserConfiguration: IEntityTypeConfiguration<ApplicationUser>
         var customer = new ApplicationUser()
         {
             Id = "MockUser2",
-            UserName = "Customer CUSTOMER",
+            UserName = "customer@abv.bg",
             FirstName = "Customer",
             LastName = "Customer",
             NormalizedUserName = "CUSTOMER CUSTOMER",
@@ -41,7 +41,7 @@ public class UserConfiguration: IEntityTypeConfiguration<ApplicationUser>
         var employee = new ApplicationUser()
         {
             Id = "MockUser3",
-            UserName = "Employee EMPLOYEE",
+            UserName = "employee@abv.bg",
             FirstName = "Employee",
             LastName = "Employee",
             NormalizedUserName = "EMPLOYEE EMPLOYEE",

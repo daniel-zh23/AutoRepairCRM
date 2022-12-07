@@ -1,6 +1,6 @@
 ﻿using AutoRepairCRM.Core.Models;
 
-namespace AutoRepairCRM.Models;
+namespace AutoRepairCRM.Areas.Customers.Models;
 
 public class AllForCustomerModel
 {

@@ -1,4 +1,5 @@
-﻿@model AutoRepairCRM.Models.AllCustomerQueryModel
+﻿@using AutoRepairCRM.Core.Models.Employee
+@model AutoRepairCRM.Models.AllEmployeeQueryModel
 @{
     ViewBag.Title = "Employees";
     Layout = "_AdminLayout";
@@ -9,11 +10,18 @@
     <div class="col-md-6 justify-content-md-start">
         <form method="get">
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <label asp-for="@Model.SearchTerm"></label>
                     <input asp-for="@Model.SearchTerm" class="form-control" placeholder="...">
                 </div>
-
+                <div class="form-group col-md-5">
+                    <label asp-for="@Model.Sorting">Sort by</label>
+                        <select asp-for="@Model.Sorting" class="form-control">
+                          <option value="0">Newest</option>
+                            <option value="1">Salary descending</option>
+                            <option value="2">Salary ascending</option>
+                        </select>
+                </div>
                 <div class="col-md-2">
                     <div class="form-group p-2 my-auto mt-3">
                         <input type="submit" value="Search" class="btn btn-primary"/>
@@ -28,3 +36,53 @@
         </div>
     </div>
 </div>
+@if (!Model.People.Any())
+{
+    <h3>No customers in database!</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Salary</th>
+        </tr>
+        @foreach (var emp in Model.People)
+        {
+            <tr>
+                <td>@emp.FirstName</td>
+                <td>@emp.LastName</td>
+                <td>@emp.Salary</td>
+                <td class="text-sm-center">
+                    <a asp-controller="Employee" asp-action="Details" class="btn btn-secondary"
+                       asp-route-id="@emp.Id">
+                        Show details
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="row mb-5">
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+               asp-controller="Customer"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage - 1 == 1 ? 1 : Model.CurrentPage - 1)"
+               asp-route-searchTerm="@Model.SearchTerm">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary
+               @(Math.Ceiling((decimal)Model.Total / AllCustomerQueryModel.PeoplePerPage) == Model.CurrentPage || !Model.People.Any() ? "disabled" : string.Empty)"
+               asp-controller="Customer"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage + 1)"
+               asp-route-searchTerm="@Model.SearchTerm">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+}

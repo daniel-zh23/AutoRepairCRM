@@ -1,7 +1,8 @@
-﻿@model AutoRepairCRM.Models.AllCustomerQueryModel
+﻿@using AutoRepairCRM.Core.Models
+@model AutoRepairCRM.Models.AllCustomerQueryModel
 
 @{
-    ViewBag.Title = "Cutomers";
+    ViewBag.Title = "Customers";
     Layout = "_AdminLayout";
 }
 
@@ -29,7 +30,7 @@
         </div>
     </div>
 </div>
-@if (!Model.Customers.Any())
+@if (!Model.People.Any())
 {
     <h3>No customers in database!</h3>
 }
@@ -41,7 +42,7 @@ else
             <th scope="col">Last Name</th>
             <th scope="col">Phone</th>
         </tr>
-        @foreach (var customer in Model.Customers)
+        @foreach (var customer in Model.People)
         {
             <tr>
                 <td>@customer.FirstName</td>
@@ -73,7 +74,7 @@ else
         </div>
         <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
             <a class="btn btn-primary
-               @(Math.Ceiling((decimal)Model.TotalCustomers / AllCustomerQueryModel.CustomersPerPage) == Model.CurrentPage || !Model.Customers.Any() ? "disabled" : string.Empty)"
+               @(Math.Ceiling((decimal)Model.Total / AllCustomerQueryModel.PeoplePerPage) == Model.CurrentPage || !Model.People.Any() ? "disabled" : string.Empty)"
                asp-controller="Customer"
                asp-action="All"
                asp-route-currentPage="@(Model.CurrentPage + 1)"

@@ -20,11 +20,21 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return User.IsInRole("Owner")
-            ? RedirectToAction("Dashboard")
-            : RedirectToAction("Personal", "Home", new {Area = "Customers"});
+        if (User.IsInRole("Owner"))
+        {
+            return RedirectToAction("Dashboard"); 
+        }
+        else if (User.IsInRole("Worker"))
+        {
+            return RedirectToAction("Services", "Home", new {Area = "Employees"});
+        }
+        else
+        {
+            return RedirectToAction("Personal", "Home", new {Area = "Customers"});
+        }
     }
     
+    [Authorize(Roles = "Owner")]
     public async Task<IActionResult> Dashboard()
     {
         var model = await _serviceService.GetActiveServices();

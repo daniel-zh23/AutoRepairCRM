@@ -20,9 +20,9 @@ public class CustomerService : ICustomerService
         _accountService = accountService;
     }
 
-    public async Task<CustomerResultModel> All(string? searchTerm = null, int currPage = 1, int perPage = 1)
+    public async Task<AllResultModel<CustomerViewModel>> All(string? searchTerm = null, int currPage = 1, int perPage = 1)
     {
-        var result = new CustomerResultModel();
+        var result = new AllResultModel<CustomerViewModel>();
         var customers = _repo.AllReadonly<Customer>();
         
         if (!string.IsNullOrEmpty(searchTerm))
@@ -36,7 +36,7 @@ public class CustomerService : ICustomerService
                                  EF.Functions.Like(c.User.PhoneNumber, searchTerm));
         }
 
-        result.Customers =  await customers
+        result.People =  await customers
             .Skip((currPage - 1) * perPage)
             .Take(perPage)
             .Select(c => new CustomerViewModel()
@@ -46,7 +46,7 @@ public class CustomerService : ICustomerService
                 LastName = c.User.LastName,
                 Phone = c.User.PhoneNumber
             }).ToListAsync();
-        result.TotalCustomers = await customers.CountAsync();
+        result.Total = await customers.CountAsync();
 
         return result;
     }

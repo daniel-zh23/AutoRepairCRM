@@ -1,6 +1,6 @@
-﻿namespace AutoRepairCRM.Core.Models;
+﻿namespace AutoRepairCRM.Core.Models.Services;
 
-public class ServiceViewModel
+public class CustomerServiceViewModel
 {
     public bool ServiceState { get; set; }
 

@@ -18,12 +18,6 @@ public class RolesConfiguration : IEntityTypeConfiguration<IdentityRole>
             },
             new()
             {
-                Id = "MockRole2",
-                Name = "Manager",
-                NormalizedName = "MANAGER"
-            },
-            new()
-            {
                 Id = "MockRole3",
                 Name = "Owner",
                 NormalizedName = "OWNER"

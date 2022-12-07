@@ -1,6 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Extensions;
-using AutoRepairCRM.Models;
+using AutoRepairCRM.Areas.Customers.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

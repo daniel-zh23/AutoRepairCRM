@@ -22,8 +22,12 @@ public class EmployeeInputModel
     public string Phone { get; set; } = null!;
     
     [Required]
+    [EmailAddress]
+    public string Email { get; set; } = null!;
+    
+    [Required]
     [Display(Name = "Base salary")]
     public decimal Salary { get; set; }
-    
-    public IEnumerable<string> Roles { get; set; } = new List<string>();
+
+    public string Roles { get; set; } = null!;
 }

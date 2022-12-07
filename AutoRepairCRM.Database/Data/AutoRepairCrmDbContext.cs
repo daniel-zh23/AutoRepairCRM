@@ -1,5 +1,7 @@
 ﻿using AutoRepairCRM.Database.Data.Models;
+using AutoRepairCRM.Database.Data.Models.Account;
 using AutoRepairCRM.Database.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +27,8 @@ public class AutoRepairCrmDbContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyMockData();
-
+        
+        
         builder.Entity<CustomerCar>()
             .HasKey(e => new { e.CarId, e.CustomerId });
         builder.Entity<ServiceEmployee>()

@@ -9,4 +9,6 @@ public interface IAccountService
     Task<ApplicationUser> CreateCustomer(CustomerInputModel model);
     
     Task<ApplicationUser> CreateEmployee(EmployeeInputModel model);
+
+    Task<IEnumerable<string>> GetRolesForUser(ApplicationUser user);
 }

@@ -1,11 +1,12 @@
-﻿using AutoRepairCRM.Core.Models.Car;
+﻿using AutoRepairCRM.Core.Models;
+using AutoRepairCRM.Core.Models.Car;
 using AutoRepairCRM.Core.Models.Customer;
 
 namespace AutoRepairCRM.Core.Contracts;
 
 public interface ICustomerService
 {
-    Task<CustomerResultModel> All(string? searchTerm = null, int currPage = 1, int perPage = 1);
+    Task<AllResultModel<CustomerViewModel>> All(string? searchTerm = null, int currPage = 1, int perPage = 1);
     
     /// <summary>
     /// Gets customer id

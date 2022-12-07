@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutoRepairCRM.Controllers;
 
-[Authorize(Roles = "Owner")]
+[Authorize(Roles = "Owner, OfficeEmployee")]
 public class CustomerController : Controller
 {
     private ICarService _carService;

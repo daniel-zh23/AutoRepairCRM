@@ -29,11 +29,14 @@
                         <i class="fa-solid fa-user m-2"></i><span>Customers</span>
                     </a>
                 </li>
-                <li class="mt-2 mb-2 list-item">
-                    <a asp-controller="Employee" asp-action="All" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Employee", "All", "pressed")">
-                        <i class="fa-solid fa-user-gear m-2"></i><span>Employees</span>
-                    </a>
-                </li>
+                @if (User.IsInRole("Owner"))
+                {
+                    <li class="mt-2 mb-2 list-item">
+                        <a asp-controller="Employee" asp-action="All" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Employee", "All", "pressed")">
+                            <i class="fa-solid fa-user-gear m-2"></i><span>Employees</span>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </nav>

@@ -20,7 +20,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        if (User.IsInRole("Owner"))
+        if (User.IsInRole("Owner") || User.IsInRole("OfficeEmployee"))
         {
             return RedirectToAction("Dashboard"); 
         }
@@ -34,7 +34,7 @@ public class HomeController : Controller
         }
     }
     
-    [Authorize(Roles = "Owner")]
+    [Authorize(Roles = "Owner, OfficeEmployee")]
     public async Task<IActionResult> Dashboard()
     {
         var model = await _serviceService.GetActiveServices();

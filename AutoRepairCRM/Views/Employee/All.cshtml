@@ -67,20 +67,22 @@ else
     <div class="row mb-5">
         <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
             <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-               asp-controller="Customer"
+               asp-controller="Employee"
                asp-action="All"
                asp-route-currentPage="@(Model.CurrentPage - 1 == 1 ? 1 : Model.CurrentPage - 1)"
-               asp-route-searchTerm="@Model.SearchTerm">
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-sorting="@Model.Sorting">
                 <i class="fa-solid fa-arrow-left"></i>
             </a>
         </div>
         <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
             <a class="btn btn-primary
                @(Math.Ceiling((decimal)Model.Total / AllCustomerQueryModel.PeoplePerPage) == Model.CurrentPage || !Model.People.Any() ? "disabled" : string.Empty)"
-               asp-controller="Customer"
+               asp-controller="Employee"
                asp-action="All"
                asp-route-currentPage="@(Model.CurrentPage + 1)"
-               asp-route-searchTerm="@Model.SearchTerm">
+               asp-route-searchTerm="@Model.SearchTerm"
+               asp-route-sorting="@Model.Sorting">
                 <i class="fa-solid fa-arrow-right"></i>
             </a>
         </div>

@@ -8,9 +8,10 @@
 
 @if (Model.Services.Any())
 {
+    <div class="d-flex justify-content-around">
     @foreach (var service in Model.Services)
     {
-        <div class="card">
+        <div class="card" style="width: 18rem">
             <h5 class="card-header">@service.ServiceType</h5>
             <div class="card-body">
                 <p class="card-text">Date of start: @service.StartDate</p>
@@ -23,6 +24,7 @@
             </div>
         </div>
     }
+    </div>
 }
 else
 {

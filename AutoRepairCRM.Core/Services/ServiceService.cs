@@ -1,5 +1,6 @@
 ﻿using AutoRepairCRM.Core.Contracts;
 using AutoRepairCRM.Core.Models;
+using AutoRepairCRM.Core.Models.Services;
 using AutoRepairCRM.Database.Data.Common;
 using AutoRepairCRM.Database.Data.Models;
 using Microsoft.EntityFrameworkCore;
@@ -29,5 +30,23 @@ public class ServiceService : IServiceService
                 Type = s.ServiceType.Name
             })
             .ToListAsync();
+    }
+
+    public async Task<bool> CompleteService(ServiceCompleteModel model)
+    {
+        var service = await _repo.GetByIdAsync<Service>(model.Id);
+        
+        service.DateEnded = DateTime.UtcNow;
+        service.IsFinished = true;
+        service.Price = model.Price;
+        await _repo.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> Exists(int id)
+    {
+        return await _repo.AllReadonly<Service>()
+            .Where(s => s.Id == id)
+            .AnyAsync();
     }
 }

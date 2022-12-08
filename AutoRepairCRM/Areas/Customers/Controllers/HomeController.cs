@@ -8,7 +8,7 @@ namespace AutoRepairCRM.Areas.Customers.Controllers;
 
 [Area("Customers")]
 [Route("/Customers/[Controller]/[Action]/{id?}")]
-[Authorize(Roles = "Customer, Manager, Owner")]
+[Authorize(Roles = "Customer, Owner, OfficeEmployee")]
 public class HomeController : Controller
 {
     private ICarService _carService;

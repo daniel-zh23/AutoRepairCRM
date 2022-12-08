@@ -6,28 +6,35 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<table class="table">
-    <tr>
-        <th scope="col">Type</th>
-        <th scope="col">CarLicense</th>
-        <th scope="col">CustomerPhone</th>
-        <th scope="col">DateStarted</th>
-        <th scope="col">EmployeeName</th>
-    </tr>
-    @foreach (var service in Model)
-    {
+@if (Model.Any())
+{
+    <table class="table">
         <tr>
-            <td>@service.Type</td>
-            <td>@service.CarLicense</td>
-            <td>@service.CustomerPhone</td>
-            <td>@service.DateStarted</td>
-            <td>@service.EmployeeName</td>
-            <td>
-                <a asp-controller="Customer" asp-action="Details" class="btn btn-success"
-                   asp-route-id="@service.Id">
-                    Complete
-                </a>
-            </td>
+            <th scope="col">Type</th>
+            <th scope="col">CarLicense</th>
+            <th scope="col">CustomerPhone</th>
+            <th scope="col">DateStarted</th>
+            <th scope="col">EmployeeName</th>
         </tr>
-    }
-</table>
+        @foreach (var service in Model)
+        {
+            <tr>
+                <td>@service.Type</td>
+                <td>@service.CarLicense</td>
+                <td>@service.CustomerPhone</td>
+                <td>@service.DateStarted</td>
+                <td>@service.EmployeeName</td>
+                <td>
+                    <a asp-controller="Home" asp-action="CompleteService" class="btn btn-success"
+                       asp-route-id="@service.Id">
+                        Complete
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h3>No active services!</h3>
+}

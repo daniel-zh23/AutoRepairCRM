@@ -28,7 +28,7 @@
 </div>
 @if (Model.Services.Any())
 {
-    
+    <div class="d-flex justify-content-around">
     @foreach (var service in Model.Services)
     {
         <div class="card">
@@ -44,6 +44,7 @@
             </div>
         </div>
     }
+    </div>
 }
 else
 {

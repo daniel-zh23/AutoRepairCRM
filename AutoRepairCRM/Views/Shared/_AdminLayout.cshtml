@@ -36,6 +36,11 @@
                             <i class="fa-solid fa-user-gear m-2"></i><span>Employees</span>
                         </a>
                     </li>
+                    <li class="mt-2 mb-2 list-item">
+                        <a asp-controller="Revenue" asp-action="Index" class="list-group-item list-group-item-action py-1 ripple @Html.ActiveClass("Revenue", "Index", "pressed")">
+                            <i class="fa-solid fa-money-bill m-2"></i><span>Revenue</span>
+                        </a>
+                    </li>
                 }
             </ul>
         </div>

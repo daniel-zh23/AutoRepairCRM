@@ -39,7 +39,7 @@ public class CustomerService : ICustomerService
         result.People =  await customers
             .Skip((currPage - 1) * perPage)
             .Take(perPage)
-            .Select(c => new CustomerViewModel()
+            .Select(c => new CustomerViewModel
             {
                 Id = c.Id,
                 FirstName = c.User.FirstName,
@@ -93,7 +93,7 @@ public class CustomerService : ICustomerService
         {
             return -1;
         }
-        var customer = new Customer()
+        var customer = new Customer
         {
             User = user
         };
@@ -112,14 +112,14 @@ public class CustomerService : ICustomerService
     {
         return await _repo.AllReadonly<Customer>()
             .Where(c => c.Id == id)
-            .Select(c => new CustomerDetailsModel()
+            .Select(c => new CustomerDetailsModel
             {
                 Id = c.Id,
                 Email = c.User.Email,
                 FirstName = c.User.FirstName,
                 LastName = c.User.LastName,
                 Phone = c.User.PhoneNumber,
-                Cars = c.CustomerCars.Select(cc => new CustomerCarViewModel()
+                Cars = c.CustomerCars.Select(cc => new CustomerCarViewModel
                 {
                     CarId = cc.CarId,
                     CustomerId = cc.CustomerId,
@@ -151,7 +151,7 @@ public class CustomerService : ICustomerService
 
     public async Task<bool> AddCustomerCar(CustomerCarInputModel model)
     {
-        await _repo.AddAsync(new CustomerCar()
+        await _repo.AddAsync(new CustomerCar
         {
             CarId = model.CarId,
             CustomerId = model.CustomerId,
@@ -168,7 +168,7 @@ public class CustomerService : ICustomerService
     {
         return await _repo.AllReadonly<CustomerCar>()
             .Where(cc => cc.CarId == carId && cc.CustomerId == customerId)
-            .Select(cc => new CustomerCarInputModel()
+            .Select(cc => new CustomerCarInputModel
             {
                 CarId = cc.CarId,
                 CustomerId = cc.CustomerId,
@@ -193,7 +193,7 @@ public class CustomerService : ICustomerService
 
     public async Task<bool> AddCustomerCarService(CarServiceInputModel model)
     {
-        var service = new Service()
+        var service = new Service
         {
             CarId = model.CarId,
             CustomerId = model.CustomerId,
@@ -202,15 +202,7 @@ public class CustomerService : ICustomerService
             ServiceTypeId = model.ServiceTypeId
         };
 
-        var services = new List<ServiceEmployee>();
-        foreach (var emp in model.Employees)
-        {
-            services.Add(new ServiceEmployee()
-            {
-                EmployeeId = emp,
-                Service = service
-            });
-        }
+        var services = model.Employees.Select(emp => new ServiceEmployee { EmployeeId = emp, Service = service }).ToList();
 
         await _repo.AddRangeAsync(services);
         await _repo.AddAsync(service);

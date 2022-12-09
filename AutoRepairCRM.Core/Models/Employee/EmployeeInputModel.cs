@@ -6,6 +6,9 @@ namespace AutoRepairCRM.Core.Models.Employee;
 public class EmployeeInputModel
 {
     [Required]
+    public int Id { get; set; }
+    
+    [Required]
     [StringLength(DataConstants.Person.MaxCustomerFNameLength,
         MinimumLength = DataConstants.Person.MinCustomerFNameLength)]
     [Display(Name = "First name")]

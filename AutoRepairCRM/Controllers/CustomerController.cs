@@ -54,7 +54,7 @@ public class CustomerController : Controller
         
         var customerId = await _customerService.Add(model);
 
-        if (customerId != -1) return RedirectToAction("Details", customerId);
+        if (customerId != -1) return RedirectToAction(nameof(Details), customerId);
         
         ViewBag.Cars = await _carService.GetAllCarsAsync();
         ModelState.AddModelError(nameof(model), "Error creating user!");
@@ -68,7 +68,7 @@ public class CustomerController : Controller
     {
         if (!await _customerService.Exists(id))
         {
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
         var customer = await _customerService.GetCustomerDetails(id);
@@ -81,7 +81,7 @@ public class CustomerController : Controller
         };
 
         ViewBag.Title = "Edit Customer";
-        return View("Add", model);
+        return View(nameof(Add), model);
     }
 
     [HttpPost]
@@ -89,21 +89,21 @@ public class CustomerController : Controller
     {
         if (!await _customerService.Exists(id))
         {
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
         
         if (!ModelState.IsValid)
         {
-            return View(model);
+            return View(nameof(Add), model);
         }
 
         var isSucceeded = await _customerService.Update(id, model);
 
-        if (isSucceeded) return RedirectToAction("All");
+        if (isSucceeded) return RedirectToAction(nameof(All));
         
         ModelState.AddModelError(nameof(model), "Error updating user!");
         ViewBag.Title = "Edit Customer";
-        return View("Add", model);
+        return View(nameof(Add), model);
 
     }
     
@@ -112,7 +112,7 @@ public class CustomerController : Controller
     {
         if (!await _customerService.Exists(id))
         {
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
         var customer = await _customerService.GetCustomerDetails(id);
@@ -160,7 +160,7 @@ public class CustomerController : Controller
         var isFinished = await _customerService.AddCustomerCar(model);
         if (isFinished)
         {
-            return RedirectToAction("Details", new{id = model.CustomerId});
+            return RedirectToAction(nameof(Details), new{id = model.CustomerId});
         }
         
         ViewBag.Cars = await _carService.GetAllCarsAsync();
@@ -176,7 +176,7 @@ public class CustomerController : Controller
         var model = await _customerService.GetCustomerCar(carId, customerId);
         ViewBag.Cars = await _carService.GetAllCarsAsync();
         ViewBag.FuelTypes = await _carService.GetFuelTypes();
-        return View("AddCar", model);
+        return View(nameof(AddCar), model);
     }
 
     [HttpPost]
@@ -201,19 +201,19 @@ public class CustomerController : Controller
         {
             ViewBag.Cars = await _carService.GetAllCarsAsync();
             ViewBag.FuelTypes = await _carService.GetFuelTypes();
-            return View("AddCar", model);
+            return View(nameof(AddCar), model);
         }
 
         var isFinished = await _customerService.UpdateCustomerCar(model);
         if (isFinished)
         {
-            return RedirectToAction("Details", new{id = model.CustomerId});
+            return RedirectToAction(nameof(Details), new{id = model.CustomerId});
         }
         
         ViewBag.Cars = await _carService.GetAllCarsAsync();
         ViewBag.FuelTypes = await _carService.GetFuelTypes();
         ModelState.AddModelError(nameof(model), "Server error!");
-        return View("AddCar", model);
+        return View(nameof(AddCar), model);
 
     }
 
@@ -223,7 +223,7 @@ public class CustomerController : Controller
         ViewBag.ServiceTypes = await _carService.GetServiceTypes();
         ViewBag.Employees = await _employeeService.AllForForm();
         var model = new CarServiceInputModel();
-        return View("AddService", model);
+        return View(nameof(AddService), model);
     }
 
     [HttpPost]
@@ -253,19 +253,19 @@ public class CustomerController : Controller
         {
             ViewBag.ServiceTypes = await _carService.GetServiceTypes();
             ViewBag.Employees = await _employeeService.AllForForm();
-            return View("AddService", model);
+            return View(nameof(AddService), model);
         }
 
         var isFinished = await _customerService.AddCustomerCarService(model);
         if (isFinished)
         {
-            return RedirectToAction("Details", new{id = model.CustomerId});
+            return RedirectToAction(nameof(Details), new{id = model.CustomerId});
         }
         
         ViewBag.ServiceTypes = await _carService.GetServiceTypes();
         ViewBag.Employees = await _employeeService.AllForForm();
         ModelState.AddModelError(nameof(model), "Server error!");
-        return View("AddService", model);
+        return View(nameof(AddService), model);
 
     }
 }

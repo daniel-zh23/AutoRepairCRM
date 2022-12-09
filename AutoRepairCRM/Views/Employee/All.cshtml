@@ -1,5 +1,4 @@
-﻿@using AutoRepairCRM.Core.Models.Employee
-@model AutoRepairCRM.Models.AllEmployeeQueryModel
+﻿@model AutoRepairCRM.Models.AllEmployeeQueryModel
 @{
     ViewBag.Title = "Employees";
     Layout = "_AdminLayout";
@@ -7,20 +6,28 @@
 
 <h2>@ViewBag.Title</h2>
 <div class="row">
-    <div class="col-md-6 justify-content-md-start">
+    <div class="col-md-8 justify-content-md-start">
         <form method="get">
             <div class="row">
                 <div class="form-group col-md-5">
                     <label asp-for="@Model.SearchTerm"></label>
                     <input asp-for="@Model.SearchTerm" class="form-control" placeholder="...">
                 </div>
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-3">
                     <label asp-for="@Model.Sorting">Sort by</label>
-                        <select asp-for="@Model.Sorting" class="form-control">
-                          <option value="0">Newest</option>
-                            <option value="1">Salary descending</option>
-                            <option value="2">Salary ascending</option>
-                        </select>
+                    <select asp-for="@Model.Sorting" class="form-control">
+                        <option value="0">Newest</option>
+                        <option value="1">Salary descending</option>
+                        <option value="2">Salary ascending</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label asp-for="@Model.Filter">Filter by</label>
+                    <select asp-for="@Model.Filter" class="form-control">
+                        <option value="0">All</option>
+                        <option value="1">Office employees</option>
+                        <option value="2">Workers</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group p-2 my-auto mt-3">
@@ -30,15 +37,15 @@
             </div>
         </form>
     </div>
-    <div class="col-md-6 d-flex justify-content-md-end">
-        <div>
+    <div class="col-md-4 d-flex justify-content-md-end">
+        <div class="mt-4">
             <a asp-controller="Employee" asp-action="Add" class="btn btn-success">Add new</a>
         </div>
     </div>
 </div>
 @if (!Model.People.Any())
 {
-    <h3>No customers in database!</h3>
+    <h3>No employees in database!</h3>
 }
 else
 {
@@ -55,9 +62,22 @@ else
                 <td>@emp.LastName</td>
                 <td>@emp.Salary</td>
                 <td class="text-sm-center">
-                    <a asp-controller="Employee" asp-action="Details" class="btn btn-secondary"
+                    @if (emp.Roles.Contains("Worker"))
+                    {
+                        <a asp-controller="Employee" asp-action="Details" class="btn btn-secondary"
+                           asp-route-id="@emp.Id">
+                            Show details
+                        </a>
+                    }
+                </td>
+                <td class="text-sm-center">
+                    <a asp-controller="Employee" asp-action="Fire" class="btn btn-danger"
                        asp-route-id="@emp.Id">
-                        Show details
+                        Fire
+                    </a>
+                    <a asp-controller="Employee" asp-action="Edit" class="btn btn-info"
+                       asp-route-id="@emp.Id">
+                        Edit
                     </a>
                 </td>
             </tr>

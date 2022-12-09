@@ -1,4 +1,6 @@
-﻿namespace AutoRepairCRM.Core.Models.Employee;
+﻿using AutoRepairCRM.Database.Data.Models.Account;
+
+namespace AutoRepairCRM.Core.Models.Employee;
 
 public class EmployeeViewModel
 {
@@ -8,6 +10,8 @@ public class EmployeeViewModel
     public string LastName { get; set; } = null!;
 
     public string Salary { get; set; } = null!;
+
+    public ApplicationUser User { get; set; } = null!;
 
     public IEnumerable<string> Roles { get; set; } = new List<string>();
 }

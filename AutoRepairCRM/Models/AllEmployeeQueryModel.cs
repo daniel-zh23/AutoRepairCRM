@@ -9,6 +9,8 @@ public class AllEmployeeQueryModel
     public string? SearchTerm { get; set; }
 
     public EmployeeSorting Sorting { get; set; }
+    
+    public EmployeeFilter Filter { get; set; }
 
     public int CurrentPage { get; set; } = 1;
 

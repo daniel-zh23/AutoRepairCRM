@@ -11,4 +11,6 @@ public interface IAccountService
     Task<ApplicationUser> CreateEmployee(EmployeeInputModel model);
 
     Task<IEnumerable<string>> GetRolesForUser(ApplicationUser user);
+
+    Task<bool> Deactivate(string id);
 }

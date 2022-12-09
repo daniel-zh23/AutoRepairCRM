@@ -14,5 +14,9 @@ public class ApplicationUser : IdentityUser
     [MaxLength(DataConstants.Person.MaxCustomerLNameLength)]
     public string LastName { get; set; } = null!;
 
-    [Required] public bool IsFirstLogin { get; set; } = true;
+    [Required]
+    public bool IsFirstLogin { get; set; } = true;
+    
+    [Required]
+    public bool IsActive { get; set; } = true;
 }

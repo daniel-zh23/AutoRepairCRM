@@ -20,7 +20,7 @@ public class ServiceService : IServiceService
     {
         return await _repo.AllReadonly<Service>()
             .Where(s => s.IsFinished == false)
-            .Select(s => new ActiveServiceViewModel()
+            .Select(s => new ActiveServiceViewModel
             {
                 Id = s.Id,
                 CarLicense = s.CustomerCar.LicensePlate,

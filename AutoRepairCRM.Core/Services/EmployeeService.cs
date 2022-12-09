@@ -22,11 +22,12 @@ public class EmployeeService : IEmployeeService
     }
 
     public async Task<AllResultModel<EmployeeViewModel>> All(string? searchTerm = null,
-        EmployeeSorting sorting = EmployeeSorting.Newest, int currPage = 1,
+        EmployeeSorting sorting = EmployeeSorting.Newest, EmployeeFilter filter = EmployeeFilter.All, int currPage = 1,
         int perPage = 1)
     {
         var result = new AllResultModel<EmployeeViewModel>();
-        var employees = _repo.AllReadonly<Employee>();
+        var employees = _repo.AllReadonly<Employee>()
+            .Where(e => e.IsActive);
 
         if (!string.IsNullOrEmpty(searchTerm))
         {
@@ -44,18 +45,32 @@ public class EmployeeService : IEmployeeService
             _ => employees.OrderByDescending(e => e.Id)
         };
 
-        result.People = await employees
+        var materializedEmployees = await employees
             .Skip((currPage - 1) * perPage)
             .Take(perPage)
-            .Select(e => new EmployeeViewModel()
+            .Select(e => new EmployeeViewModel
             {
                 Id = e.Id,
                 FirstName = e.User!.FirstName,
                 LastName = e.User!.LastName,
-                Salary = e.Salary.ToString("f2")
+                Salary = e.Salary.ToString("f2"),
+                User = e.User
             })
             .ToListAsync();
+        
+        foreach (var employeeViewModel in materializedEmployees)
+        {
+            employeeViewModel.Roles = await _accountService.GetRolesForUser(employeeViewModel.User);
+        }
 
+        materializedEmployees = filter switch
+        {
+            EmployeeFilter.Office => materializedEmployees.Where(e => e.Roles.Contains("OfficeEmployee")).ToList(),
+            EmployeeFilter.Worker => materializedEmployees.Where(e => e.Roles.Contains("Worker")).ToList(),
+            _ => materializedEmployees
+        };
+        
+        result.People = materializedEmployees;
         result.Total = await employees.CountAsync();
         return result;
     }
@@ -77,7 +92,7 @@ public class EmployeeService : IEmployeeService
         result.People = await services
             .Skip((currPage - 1) * perPage)
             .Take(perPage)
-            .Select(s => new EmployeeServiceViewModel()
+            .Select(s => new EmployeeServiceViewModel
             {
                 LicensePlate = s.Service.CustomerCar.LicensePlate,
                 ServiceType = s.Service.ServiceType.Name,
@@ -100,11 +115,12 @@ public class EmployeeService : IEmployeeService
     public async Task<IEnumerable<EmployeeForFormModel>> AllForForm()
     {
         return await _repo.AllReadonly<Employee>()
-            .Select(e => new EmployeeForFormModel()
+            .Where(e => e.IsActive)
+            .Select(e => new EmployeeForFormModel
             {
                 Id = e.Id,
                 FirstName = e.User == null ? "" : e.User.FirstName,
-                LastName = e.User == null ? "" : e.User.LastName,
+                LastName = e.User == null ? "" : e.User.LastName
             })
             .ToListAsync();
     }
@@ -121,7 +137,7 @@ public class EmployeeService : IEmployeeService
             return null;
         }
 
-        var employee = new Employee()
+        var employee = new Employee
         {
             User = user,
             Salary = model.Salary
@@ -152,5 +168,51 @@ public class EmployeeService : IEmployeeService
             .ToListAsync();
 
         return roles.All(role => rolesDb.Contains(role));
+    }
+
+    public async Task<bool> Fire(int id)
+    {
+        var employee = await _repo.GetByIdAsync<Employee>(id);
+        var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
+
+        employee.IsActive = false;
+        await _accountService.Deactivate(user.Id);
+        
+        await _repo.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<EmployeeInputModel> GetEmployeeEdit(int id)
+    {
+        var employee = await _repo.GetByIdAsync<Employee>(id);
+        var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
+
+        return new EmployeeInputModel
+        {
+            Id = employee.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Phone = user.PhoneNumber,
+            Email = user.Email,
+            Salary = employee.Salary,
+            Roles = _accountService.GetRolesForUser(user).Result.First()
+        };
+    }
+
+    public async Task<bool> Update(int id, EmployeeInputModel model)
+    {
+        var employee = await _repo.AllReadonly<Employee>()
+            .Where(c => c.Id == id)
+            .FirstAsync();
+        var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
+        user.FirstName = model.FirstName;
+        user.LastName = model.LastName;
+        user.PhoneNumber = model.Phone;
+        user.Email = model.Email;
+        employee.Salary = model.Salary;
+
+        _repo.Update(employee);
+        await _repo.SaveChangesAsync();
+        return true;
     }
 }

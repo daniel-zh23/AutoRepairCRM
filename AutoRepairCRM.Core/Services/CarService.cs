@@ -11,7 +11,7 @@ namespace AutoRepairCRM.Core.Services;
 
 public class CarService : ICarService
 {
-    private IRepository _repo;
+    private readonly IRepository _repo;
 
     public CarService(IRepository repo)
     {
@@ -30,7 +30,7 @@ public class CarService : ICarService
             .Take(perPage)
             .Include(c => c.Car)
             .Include(c => c.FuelType)
-            .Select(c => new CustomerCarViewModel()
+            .Select(c => new CustomerCarViewModel
             {
                 CarId = c.CarId,
                 CustomerId = c.CustomerId,
@@ -49,12 +49,12 @@ public class CarService : ICarService
     {
         return await _repo.AllReadonly<CustomerCar>()
             .Where(cc => cc.CustomerId == customerId && cc.CarId == carId)
-            .Select(cc => new CarDetailsModel()
+            .Select(cc => new CarDetailsModel
             {
                 Make = cc.Car.Make,
                 Model = cc.Car.Model,
                 Services = cc.Services
-                    .Select(s => new CustomerServiceViewModel()
+                    .Select(s => new CustomerServiceViewModel
                     {
                         ServiceType = s.ServiceType.Name,
                         ServiceState = s.IsFinished,
@@ -68,7 +68,7 @@ public class CarService : ICarService
     public async Task<IEnumerable<CarViewModel>> GetAllCarsAsync()
     {
         return await _repo.AllReadonly<Car>()
-            .Select(c => new CarViewModel()
+            .Select(c => new CarViewModel
             {
                 Id = c.Id,
                 Make = c.Make,

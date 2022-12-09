@@ -34,7 +34,7 @@ public class AccountController : Controller
         
         var user = await _userManager.FindByEmailAsync(model.Email);
 
-        if (user == null)
+        if (user is not { IsActive: true })
         {
             ModelState.AddModelError(String.Empty, "Invalid user.");
             return View(model);

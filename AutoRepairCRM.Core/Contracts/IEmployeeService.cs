@@ -7,11 +7,12 @@ namespace AutoRepairCRM.Core.Contracts;
 
 public interface IEmployeeService
 {
-    Task<AllResultModel<EmployeeViewModel>> All(string? searchTerm = null, EmployeeSorting sorting = EmployeeSorting.SalaryAsc, int currPage = 1, int perPage = 1);
+    Task<AllResultModel<EmployeeViewModel>> All(string? searchTerm = null, EmployeeSorting sorting = EmployeeSorting.SalaryAsc, EmployeeFilter filter = EmployeeFilter.All, int currPage = 1, int perPage = 1);
 
     Task<AllResultModel<EmployeeServiceViewModel>> GetServices(int id, ServiceSorting sorting = ServiceSorting.All, int currPage = 1, int perPage = 1);
     
     Task<int> GetEmployeeId(string userId);
+    
     Task<IEnumerable<EmployeeForFormModel>> AllForForm();
 
     Task<string?> Add(EmployeeInputModel model);
@@ -21,4 +22,10 @@ public interface IEmployeeService
     Task<IEnumerable<IdentityRole>> GetAllRoles();
 
     Task<bool> RolesExist(params string[] roles);
+
+    Task<bool> Fire(int id);
+
+    Task<EmployeeInputModel> GetEmployeeEdit(int id);
+
+    Task<bool> Update(int id, EmployeeInputModel model);
 }

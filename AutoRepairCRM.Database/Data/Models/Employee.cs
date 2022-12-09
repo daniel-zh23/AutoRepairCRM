@@ -17,6 +17,9 @@ public class Employee
     [Column(TypeName = DataConstants.Employee.EmployeeSalaryDecimal)]
     public decimal Salary { get; set; }
 
+    [Required]
+    public bool IsActive { get; set; } = true;
+
     public ApplicationUser? User { get; set; }
 
     public IEnumerable<ServiceEmployee> ServicesEmployees { get; set; } = new List<ServiceEmployee>();

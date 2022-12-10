@@ -19,9 +19,18 @@ public class HomeController : Controller
         _employeeService = employeeService;
     }
 
-    public async Task<IActionResult> Services([FromQuery] AllForEmployeeModel query)
+    public async Task<IActionResult> Services(int? id, [FromQuery] AllForEmployeeModel query)
     {
-        var employeeId = await _employeeService.GetEmployeeId(User.Id());
+        var employeeId = 0;
+        if (id == null)
+        {
+            employeeId = await _employeeService.GetEmployeeId(User.Id());
+        }
+        else
+        {
+            employeeId = id.Value;
+        }
+
         if (!await _employeeService.Exists(employeeId))
         {
             return RedirectToAction("Index", "Home");

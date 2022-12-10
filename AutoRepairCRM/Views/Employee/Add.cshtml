@@ -33,7 +33,7 @@
             <input asp-for="@Model.Salary" class="form-control">
             <span asp-validation-for="@Model.Salary" class="small text-danger"></span>
         </div>
-        @if (ViewBag.IsEdit)
+        @if (!ViewBag.IsEdit)
         {
             <div class="form-group">
                 <label asp-for="@Model.Roles">Assign roles</label>

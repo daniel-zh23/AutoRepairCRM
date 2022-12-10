@@ -64,7 +64,7 @@ else
                 <td class="text-sm-center">
                     @if (emp.Roles.Contains("Worker"))
                     {
-                        <a asp-controller="Employee" asp-action="Details" class="btn btn-secondary"
+                        <a asp-area="Employees" asp-controller="Home" asp-action="Services" class="btn btn-secondary"
                            asp-route-id="@emp.Id">
                             Show details
                         </a>

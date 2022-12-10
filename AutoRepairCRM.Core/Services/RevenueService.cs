@@ -21,7 +21,7 @@ public class RevenueService : IRevenueService
         result.RevenueThisMonth = await _repo.AllReadonly<Service>()
             .Select(s => s.Price).SumAsync();
 
-        result.
+        //result.
         
         return result;
     }

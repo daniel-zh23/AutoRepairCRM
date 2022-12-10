@@ -67,11 +67,6 @@ public class EmployeeController : Controller
         return View(model);
     }
 
-    public IActionResult Details(int id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IActionResult> Fire(int id)
     {
         if (!await _employeeService.Exists(id))

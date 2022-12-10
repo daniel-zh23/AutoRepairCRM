@@ -29,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="obj\Debug\net6.0\staticwebassets" />
       <Folder Include="wwwroot\js\Account" />
       <Folder Include="wwwroot\lib\fontAwesome\dist\js" />
     </ItemGroup>
@@ -54,6 +55,47 @@
       <AdditionalFiles Include="Views\Customer\Edit.cshtml" />
       <AdditionalFiles Include="Views\Employee\Add.cshtml" />
       <AdditionalFiles Include="Views\Employee\All.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="obj\AutoRepairCRM.csproj.EntityFrameworkCore.targets" />
+      <Content Include="obj\AutoRepairCRM.csproj.nuget.dgspec.json" />
+      <Content Include="obj\AutoRepairCRM.csproj.nuget.g.props" />
+      <Content Include="obj\AutoRepairCRM.csproj.nuget.g.targets" />
+      <Content Include="obj\Debug\net6.0\apphost.exe" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.AssemblyInfoInputs.cache" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.assets.cache" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.csproj.AssemblyReference.cache" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.csproj.CopyComplete" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.csproj.CoreCompileInputs.cache" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.csproj.FileListAbsolute.txt" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.dll" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.GeneratedMSBuildEditorConfig.editorconfig" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.genruntimeconfig.cache" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.MvcApplicationPartsAssemblyInfo.cache" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.pdb" />
+      <Content Include="obj\Debug\net6.0\AutoRepairCRM.RazorAssemblyInfo.cache" />
+      <Content Include="obj\Debug\net6.0\refint\AutoRepairCRM.dll" />
+      <Content Include="obj\Debug\net6.0\ref\AutoRepairCRM.dll" />
+      <Content Include="obj\Debug\net6.0\scopedcss\bundle\AutoRepairCRM.styles.css" />
+      <Content Include="obj\Debug\net6.0\scopedcss\projectbundle\AutoRepairCRM.bundle.scp.css" />
+      <Content Include="obj\Debug\net6.0\scopedcss\Views\Shared\_AdminLayout.cshtml.rz.scp.css" />
+      <Content Include="obj\Debug\net6.0\scopedcss\Views\Shared\_CustomerLayout.cshtml.rz.scp.css" />
+      <Content Include="obj\Debug\net6.0\staticwebassets.build.json" />
+      <Content Include="obj\Debug\net6.0\staticwebassets.development.json" />
+      <Content Include="obj\project.assets.json" />
+      <Content Include="obj\project.nuget.cache" />
+      <Content Include="obj\project.packagespec.json" />
+      <Content Include="obj\rider.project.restore.info" />
+      <Content Include="obj\staticwebassets.pack.sentinel" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
+      <Compile Include="obj\Debug\net6.0\AutoRepairCRM.AssemblyInfo.cs" />
+      <Compile Include="obj\Debug\net6.0\AutoRepairCRM.GlobalUsings.g.cs" />
+      <Compile Include="obj\Debug\net6.0\AutoRepairCRM.MvcApplicationPartsAssemblyInfo.cs" />
+      <Compile Include="obj\Debug\net6.0\AutoRepairCRM.RazorAssemblyInfo.cs" />
     </ItemGroup>
 
 </Project>

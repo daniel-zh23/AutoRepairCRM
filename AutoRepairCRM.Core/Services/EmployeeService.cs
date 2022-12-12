@@ -140,7 +140,8 @@ public class EmployeeService : IEmployeeService
         var employee = new Employee
         {
             User = user,
-            Salary = model.Salary
+            Salary = model.Salary,
+            BonusPercent = model.Bonus
         };
         await _repo.AddAsync(employee);
         await _repo.SaveChangesAsync();
@@ -195,6 +196,7 @@ public class EmployeeService : IEmployeeService
             Phone = user.PhoneNumber,
             Email = user.Email,
             Salary = employee.Salary,
+            Bonus = employee.BonusPercent,
             Roles = _accountService.GetRolesForUser(user).Result.First()
         };
     }
@@ -210,6 +212,7 @@ public class EmployeeService : IEmployeeService
         user.PhoneNumber = model.Phone;
         user.Email = model.Email;
         employee.Salary = model.Salary;
+        employee.BonusPercent = model.Bonus;
 
         _repo.Update(employee);
         await _repo.SaveChangesAsync();

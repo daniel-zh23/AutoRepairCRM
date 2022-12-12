@@ -13,13 +13,21 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
     private IEnumerable<Employee> GetAll()
     {
-        return new List<Employee>()
+        return new List<Employee>
         {
             new()
             {
                 Id = 1,
                 UserId = "MockUser3",
-                Salary = 250.0m
+                Salary = 850.0m,
+                BonusPercent = 5
+            },
+            new()
+            {
+                Id = 2,
+                UserId = "MockUser4",
+                Salary = 1100.0m,
+                BonusPercent = 0
             }
         };
     }

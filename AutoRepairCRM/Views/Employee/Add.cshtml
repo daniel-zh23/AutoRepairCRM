@@ -30,9 +30,14 @@
         </div>
         <div class="form-group mt-3">
             <label asp-for="@Model.Salary"></label>
-            <input asp-for="@Model.Salary" class="form-control">
+            <input asp-for="@Model.Salary" type="number" class="form-control">
             <span asp-validation-for="@Model.Salary" class="small text-danger"></span>
         </div>
+        <div class="form-group mt-3">
+                    <label asp-for="@Model.Bonus"></label>
+                    <input asp-for="@Model.Bonus" type="number" class="form-control">
+                    <span asp-validation-for="@Model.Bonus" class="small text-danger"></span>
+                </div>
         @if (!ViewBag.IsEdit)
         {
             <div class="form-group">
@@ -46,6 +51,10 @@
                 </select>
                 <span asp-validation-for="@Model.Roles"></span>
             </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="@Model.Roles">
         }
         <div class="text-center mt-4">
             <input type="submit" class="btn btn-primary" value="Save"/>

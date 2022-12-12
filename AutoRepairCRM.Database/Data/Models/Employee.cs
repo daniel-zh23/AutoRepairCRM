@@ -19,7 +19,10 @@ public class Employee
 
     [Required]
     public bool IsActive { get; set; } = true;
-
+    
+    [Required]
+    [Range(0, 50)]
+    public int BonusPercent { get; set; }
     public ApplicationUser? User { get; set; }
 
     public IEnumerable<ServiceEmployee> ServicesEmployees { get; set; } = new List<ServiceEmployee>();

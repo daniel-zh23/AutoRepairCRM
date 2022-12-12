@@ -21,10 +21,10 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
                 ServiceTypeId = 1,
                 CarId = 2,
                 CustomerId = 1,
-                DateStarted = new DateTime(2022, 10, 2),
+                DateStarted = new DateTime(2022, 11, 2),
                 IsFinished = true,
-                DateEnded = new DateTime(2022, 10, 16),
-                Price = 1350.20m
+                DateEnded = new DateTime(2022, 11, 16),
+                Price = 1800.00m
             },
             new()
             {
@@ -32,8 +32,30 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
                 ServiceTypeId = 2,
                 CarId = 2,
                 CustomerId = 1,
-                DateStarted = new DateTime(2021, 10, 24),
+                DateStarted = new DateTime(2021, 11, 24),
                 IsFinished = false
+            },
+            new()
+            {
+                Id = 3,
+                ServiceTypeId = 1,
+                CarId = 2,
+                CustomerId = 1,
+                DateStarted = new DateTime(2022, 12, 2),
+                IsFinished = true,
+                DateEnded = new DateTime(2022, 12, 16),
+                Price = 2500.23m
+            },
+            new()
+            {
+                Id = 4,
+                ServiceTypeId = 3,
+                CarId = 3,
+                CustomerId = 1,
+                DateStarted = new DateTime(2022, 12, 2),
+                IsFinished = true,
+                DateEnded = new DateTime(2022, 12, 16),
+                Price = 1000.10m
             },
         };
     }

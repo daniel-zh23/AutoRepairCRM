@@ -1,4 +1,4 @@
-﻿@model AutoRepairCRM.Core.Models.Revenue.RevenueModel
+﻿@model AllRevenueQueryModel
 
 @{
     ViewBag.Title = "Revenue";
@@ -6,3 +6,65 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<form method="get">
+    <div class="row">
+        <div class="form-group col-md-5">
+            <label asp-for="@Model.Month"></label>
+            <select asp-for="@Model.Month" class="form-control" placeholder="...">
+                @for (int i = 1; i <= 12; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-5">
+            <label asp-for="@Model.Year"></label>
+            <select asp-for="@Model.Year" class="form-control" placeholder="...">
+                @for (int i = 2000; i <= DateTime.UtcNow.Year; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group p-2 my-auto mt-3">
+                <input type="submit" value="Search" class="btn btn-primary"/>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col">
+        <h5>Revenue this month: @(Model.Revenue.Value.ToString("f2"))</h5>
+    </div>
+    <div class="col">
+        <h5>Revenue after paid to employees: @(Model.Profit.Value.ToString("f2"))</h5>
+    </div>
+    <div class="col"></div>
+</div>
+@if (!Model.Employees.Any())
+{
+    <h3>No employees in database!</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Bonus</th>
+            <th scope="col">Total</th>
+        </tr>
+        @foreach (var emp in Model.Employees)
+        {
+            <tr>
+                <td>@emp.FirstName</td>
+                <td>@emp.LastName</td>
+                <td>@emp.Salary</td>
+                <td>@emp.BonusPercentage%</td>
+                <td>@emp.Total.ToString("f2")</td>
+            </tr>
+        }
+    </table>
+}

@@ -36,6 +36,15 @@
       <Compile Include="obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
       <Compile Include="obj\Debug\net6.0\AutoRepairCRM.Database.AssemblyInfo.cs" />
       <Compile Include="obj\Debug\net6.0\AutoRepairCRM.Database.GlobalUsings.g.cs" />
+      <Compile Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="obj\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="obj\**" />
     </ItemGroup>
 
 </Project>

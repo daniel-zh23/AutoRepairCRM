@@ -4,5 +4,5 @@ namespace AutoRepairCRM.Core.Contracts;
 
 public interface IRevenueService
 {
-    Task<RevenueModel> GetRevenue();
+    Task<RevenueModel> GetRevenue(DateTime date);
 }

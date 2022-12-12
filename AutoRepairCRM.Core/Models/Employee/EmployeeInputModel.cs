@@ -29,6 +29,10 @@ public class EmployeeInputModel
     public string Email { get; set; } = null!;
     
     [Required]
+    [Range(0, 50, ErrorMessage = "Bonus can be between 0% and 50% (real number)!")]
+    public int Bonus { get; set; }
+    
+    [Required]
     [Display(Name = "Base salary")]
     public decimal Salary { get; set; }
 

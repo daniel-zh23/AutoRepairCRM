@@ -21,6 +21,15 @@ public class EmployeeService : IEmployeeService
         _accountService = accountService;
     }
 
+    /// <summary>
+    /// Gets all employees depending on currPage and perPage parameters.
+    /// </summary>
+    /// <param name="searchTerm">Searches in first name or last name of the employee.</param>
+    /// <param name="sorting">EmployeeSorting enum value.</param>
+    /// <param name="filter">EmployeeFilter enum value.</param>
+    /// <param name="currPage">Used for pagination.</param>
+    /// <param name="perPage">Specifies how many to get from te database.</param>
+    /// <returns>Total employees and employees for this page.</returns>
     public async Task<AllResultModel<EmployeeViewModel>> All(string? searchTerm = null,
         EmployeeSorting sorting = EmployeeSorting.Newest, EmployeeFilter filter = EmployeeFilter.All, int currPage = 1,
         int perPage = 1)
@@ -75,6 +84,14 @@ public class EmployeeService : IEmployeeService
         return result;
     }
 
+    /// <summary>
+    /// Gets all services for employee depending on currPage and perPage parameters.
+    /// </summary>
+    /// <param name="id">Id of the employee.</param>
+    /// <param name="sorting">ServiceSorting enum value.</param>
+    /// <param name="currPage">Used for pagination.</param>
+    /// <param name="perPage">Specifies how many to get from te database.</param>
+    /// <returns>Total services and services for this page.</returns>
     public async Task<AllResultModel<EmployeeServiceViewModel>> GetServices(int id, ServiceSorting sorting = ServiceSorting.All, int currPage = 1, int perPage = 1)
     {
         var result = new AllResultModel<EmployeeServiceViewModel>();
@@ -105,6 +122,11 @@ public class EmployeeService : IEmployeeService
         return result;
     }
 
+    /// <summary>
+    /// Gets employee id.
+    /// </summary>
+    /// <param name="userId">Providing user id to find it's corresponding employee.</param>
+    /// <returns>The id of the employee.</returns>
     public async Task<int> GetEmployeeId(string userId)
     {
         return await _repo.AllReadonly<Employee>(c => c.UserId == userId)
@@ -112,6 +134,10 @@ public class EmployeeService : IEmployeeService
             .FirstAsync();
     }
 
+    /// <summary>
+    /// Gets All employees first name and last name only.
+    /// </summary>
+    /// <returns>Collection of EmployeeForFormModel</returns>
     public async Task<IEnumerable<EmployeeForFormModel>> AllForForm()
     {
         return await _repo.AllReadonly<Employee>()
@@ -125,18 +151,14 @@ public class EmployeeService : IEmployeeService
             .ToListAsync();
     }
 
-    public async Task<string?> Add(EmployeeInputModel model)
+    /// <summary>
+    /// Adds employee to database.
+    /// </summary>
+    /// <param name="model">Input model from form.</param>
+    /// <param name="user">Application user that corresponds to that employee.</param>
+    /// <returns>Id of the employee, null if not succeeded.</returns>
+    public async Task<string?> Add(EmployeeInputModel model, ApplicationUser user)
     {
-        ApplicationUser user;
-        try
-        {
-            user = await _accountService.CreateEmployee(model);
-        }
-        catch (Exception)
-        {
-            return null;
-        }
-
         var employee = new Employee
         {
             User = user,
@@ -149,12 +171,21 @@ public class EmployeeService : IEmployeeService
         return user.Id;
     }
 
+    /// <summary>
+    /// Check if employee exists.
+    /// </summary>
+    /// <param name="id">Providing employee's id that we want to check.</param>
+    /// <returns>True if found, otherwise false.</returns>>
     public async Task<bool> Exists(int id)
     {
         return await _repo.AllReadonly<Employee>()
             .AnyAsync(e => e.Id == id);
     }
 
+    /// <summary>
+    /// Get all roles.
+    /// </summary>
+    /// <returns>Collection of IdentityRole.</returns>
     public async Task<IEnumerable<IdentityRole>> GetAllRoles()
     {
         return await _repo.AllReadonly<IdentityRole>()
@@ -162,6 +193,11 @@ public class EmployeeService : IEmployeeService
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Check if roles exists
+    /// </summary>
+    /// <param name="roles">Providing params of string to check in bulk.</param>
+    /// <returns>True if all are found, otherwise false.</returns>>
     public async Task<bool> RolesExist(params string[] roles)
     {
         var rolesDb = await _repo.AllReadonly<IdentityRole>()
@@ -171,6 +207,11 @@ public class EmployeeService : IEmployeeService
         return roles.All(role => rolesDb.Contains(role));
     }
 
+    /// <summary>
+    /// Disables employee and deactivates it's account.
+    /// </summary>
+    /// <param name="id">Id of employee.</param>
+    /// <returns>True if successful, otherwise false.</returns>>
     public async Task<bool> Fire(int id)
     {
         var employee = await _repo.GetByIdAsync<Employee>(id);
@@ -183,6 +224,11 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
+    /// <summary>
+    /// Gets employee for edit.
+    /// </summary>
+    /// <param name="id">Id of the employee to edit.</param>
+    /// <returns>EmployeeInputModel object.</returns>
     public async Task<EmployeeInputModel> GetEmployeeEdit(int id)
     {
         var employee = await _repo.GetByIdAsync<Employee>(id);
@@ -201,6 +247,12 @@ public class EmployeeService : IEmployeeService
         };
     }
 
+    /// <summary>
+    /// Updates employee in the database.
+    /// </summary>
+    /// <param name="id">Id of the employee to update.</param>
+    /// <param name="model">EmployeeInputModel with new parameters.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> Update(int id, EmployeeInputModel model)
     {
         var employee = await _repo.AllReadonly<Employee>()

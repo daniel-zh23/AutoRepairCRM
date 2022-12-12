@@ -16,15 +16,15 @@ public class UserConfiguration: IEntityTypeConfiguration<ApplicationUser>
     private List<ApplicationUser> GetAll()
     {
         var hasher = new PasswordHasher<ApplicationUser>();
-        var admin = new ApplicationUser()
+        var owner = new ApplicationUser()
         {
             Id = "MockUser1",
-            UserName = "admin@abv.bg",
-            FirstName = "Admin",
-            LastName = "Admin",
-            NormalizedUserName = "ADMIN@ABV.BG",
-            Email = "admin@abv.bg",
-            NormalizedEmail = "ADMIN@ABV.BG",
+            UserName = "owner@abv.bg",
+            FirstName = "Owner",
+            LastName = "OWNER",
+            NormalizedUserName = "OWNER@ABV.BG",
+            Email = "owner@abv.bg",
+            NormalizedEmail = "OWNER@ABV.BG",
             PhoneNumber = "01234",
             EmailConfirmed = true,
             IsFirstLogin = false
@@ -71,9 +71,9 @@ public class UserConfiguration: IEntityTypeConfiguration<ApplicationUser>
 
         worker.PasswordHash = hasher.HashPassword(worker, "worker1234");
         customer.PasswordHash = hasher.HashPassword(customer, "customer1234");
-        admin.PasswordHash = hasher.HashPassword(admin, "admin1234");
-        office.PasswordHash = hasher.HashPassword(admin, "office1234");
+        owner.PasswordHash = hasher.HashPassword(owner, "owner1234");
+        office.PasswordHash = hasher.HashPassword(office, "office1234");
 
-        return new List<ApplicationUser>() { customer, admin, worker, office };
+        return new List<ApplicationUser>() { customer, owner, worker, office };
     }
 }

@@ -10,10 +10,12 @@ namespace AutoRepairCRM.Controllers;
 public class EmployeeController : Controller
 {
     private readonly IEmployeeService _employeeService;
+    private readonly IAccountService _accountService;
 
-    public EmployeeController(IEmployeeService employeeService)
+    public EmployeeController(IEmployeeService employeeService, IAccountService accountService)
     {
         _employeeService = employeeService;
+        _accountService = accountService;
     }
 
     [HttpGet]
@@ -53,8 +55,15 @@ public class EmployeeController : Controller
             ViewBag.IsEdit = false;
             return View(model);
         }
+        
+        var user = await _accountService.CreateEmployee(model);
+        string? empId = null;
+        
+        if (user != null)
+        {
+            empId = await _employeeService.Add(model, user);
+        }
 
-        var empId = await _employeeService.Add(model);
         if (!string.IsNullOrEmpty(empId))
         {
             return RedirectToAction(nameof(All));

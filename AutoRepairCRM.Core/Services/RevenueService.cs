@@ -15,6 +15,11 @@ public class RevenueService : IRevenueService
         _repo = repo;
     }
 
+    /// <summary>
+    /// Gets revenue information and all employees with salaries
+    /// </summary>
+    /// <param name="date">DateTime to get desired revenue search for the provided month and year.</param>
+    /// <returns>Returns revenue for the month, profit and collection of EmployeeRevenueModel</returns>
     public async Task<RevenueModel> GetRevenue(DateTime date)
     {
         var result = new RevenueModel();
@@ -28,7 +33,9 @@ public class RevenueService : IRevenueService
 
         var employeeBonus = await _repo.AllReadonly<ServiceEmployee>()
             .Include(se => se.Service)
-            .Where(se => se.Service.DateEnded.Value.Month == date.Month && se.Service.DateEnded.Value.Year == date.Year)
+            .Where(se => se.Service.DateEnded != null &&
+                         se.Service.DateEnded.Value.Month == date.Month &&
+                         se.Service.DateEnded.Value.Year == date.Year)
             .Select(se => new { se.EmployeeId, se.Service.Price })
             .ToListAsync();
 

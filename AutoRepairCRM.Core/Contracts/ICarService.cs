@@ -9,10 +9,10 @@ public interface ICarService
     /// <summary>
     /// Gets call cars for customer
     /// </summary>
-    /// <param name="customerId">Providing customerId to get his cars</param>
-    /// <param name="currPage"></param>
-    /// <param name="perPage"></param>
-    /// <returns>IQueryable of CustomerCarViewModel</returns>>
+    /// <param name="customerId">Providing customerId to get his cars.</param>
+    /// <param name="currPage">User for pagination.</param>
+    /// <param name="perPage">Specifies how many to get from te database.</param>
+    /// <returns>ForCustomerResultModel object.</returns>>
     Task<ForCustomerResultModel> GetAllForCustomer(int customerId, int currPage = 1, int perPage = 1);
 
     /// <summary>
@@ -20,7 +20,7 @@ public interface ICarService
     /// </summary>
     /// <param name="carId">Providing carId to get his cars</param>
     /// <param name="customerId">Providing customerId to get his cars</param>
-    /// <returns>IQueryable of CarDetailsModel</returns>>
+    /// <returns>CarDetails object.</returns>>
     Task<CarDetailsModel> GetServicesById(int carId, int customerId);
 
     /// <summary>
@@ -33,14 +33,32 @@ public interface ICarService
     /// Checks if car exists in the database
     /// </summary>
     /// <param name="carId">The id of the car you want to check</param>
-    /// <returns>Boolean true or false</returns>
+    /// <returns>True if found, otherwise false.</returns>
     Task<bool> CarExists(int carId);
 
+    /// <summary>
+    /// Gets all fuel types from the database.
+    /// </summary>
+    /// <returns>IEnumerable of FuelType.</returns>
     Task<IEnumerable<FuelType>> GetFuelTypes();
 
+    /// <summary>
+    /// Checks if fuel exists in the database
+    /// </summary>
+    /// <param name="fuelId">Integer of the id to check.</param>
+    /// <returns>True if found, otherwise false.</returns>
     Task<bool> FuelExists(int fuelId);
     
-    Task<bool> ServiceTypeExists(int fuelId);
+    /// <summary>
+    /// Checks if service type exists in the database
+    /// </summary>
+    /// <param name="serviceTypeId">Integer of the id to check.</param>
+    /// <returns>True if found, otherwise false.</returns>
+    Task<bool> ServiceTypeExists(int serviceTypeId);
     
+    /// <summary>
+    /// Gets all service types from the database.
+    /// </summary>
+    /// <returns>IEnumerable of ServiceType.</returns>
     Task<IEnumerable<ServiceType>> GetServiceTypes();
 }

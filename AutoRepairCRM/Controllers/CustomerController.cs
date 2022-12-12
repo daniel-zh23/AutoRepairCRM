@@ -14,12 +14,14 @@ public class CustomerController : Controller
     private ICarService _carService;
     private ICustomerService _customerService;
     private IEmployeeService _employeeService;
+    private IAccountService _accountService;
 
-    public CustomerController(ICarService carService, ICustomerService customerService, IEmployeeService employeeService)
+    public CustomerController(ICarService carService, ICustomerService customerService, IEmployeeService employeeService, IAccountService accountService)
     {
         _carService = carService;
         _customerService = customerService;
         _employeeService = employeeService;
+        _accountService = accountService;
     }
     
     [HttpGet]
@@ -51,9 +53,15 @@ public class CustomerController : Controller
             ViewBag.Title = "Add Customer";
             return View(model);
         }
-        
-        var customerId = await _customerService.Add(model);
 
+        var user = await _accountService.CreateCustomer(model);
+        var customerId = -1;
+        
+        if (user != null)
+        {
+            customerId = await _customerService.Add(user);
+        }
+        
         if (customerId != -1) return RedirectToAction(nameof(Details), customerId);
         
         ViewBag.Cars = await _carService.GetAllCarsAsync();
@@ -232,6 +240,11 @@ public class CustomerController : Controller
         if (!await _carService.CarExists(model.CarId))
         {
             ModelState.AddModelError(string.Empty, "Car is not valid.");
+        }
+        
+        if (!await _carService.ServiceTypeExists(model.ServiceTypeId))
+        {
+            ModelState.AddModelError(string.Empty, "Service type is not valid.");
         }
 
         if (!await _customerService.Exists(model.CustomerId))

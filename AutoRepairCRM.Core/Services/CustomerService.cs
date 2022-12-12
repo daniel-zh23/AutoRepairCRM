@@ -12,14 +12,19 @@ namespace AutoRepairCRM.Core.Services;
 public class CustomerService : ICustomerService
 {
     private readonly IRepository _repo;
-    private readonly IAccountService _accountService;
 
-    public CustomerService(IRepository repo, IAccountService accountService)
+    public CustomerService(IRepository repo)
     {
         _repo = repo;
-        _accountService = accountService;
     }
 
+    /// <summary>
+    /// Gets all customers depending on currPage and perPage parameters.
+    /// </summary>
+    /// <param name="searchTerm">Term to search in first name, last name or phone number.</param>
+    /// <param name="currPage">User for pagination.</param>
+    /// <param name="perPage">Specifies how many to get from te database.</param>
+    /// <returns>AllResultModel with total customers and collection of CustomerViewModel meting the criteria, if any.</returns>
     public async Task<AllResultModel<CustomerViewModel>> All(string? searchTerm = null, int currPage = 1, int perPage = 1)
     {
         var result = new AllResultModel<CustomerViewModel>();
@@ -52,9 +57,9 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Gets customer id
+    /// Gets customer id by giving ApplicationUser id
     /// </summary>
-    /// <param name="userId">Providing ApplicationUserId to get the correct customer</param>
+    /// <param name="userId">Providing ApplicationUser Id.</param>
     /// <returns>Customer id as int or -1 in case of not found</returns>>
     public async Task<int> GetCustomerId(string userId)
     {
@@ -67,7 +72,7 @@ public class CustomerService : ICustomerService
     /// Check if customer exists
     /// </summary>
     /// <param name="customerId">Providing CustomerId that we want to check</param>
-    /// <returns>True or false</returns>>
+    /// <returns>True if found, otherwise false.</returns>>
     public async Task<bool> Exists(int customerId)
     {
         var customer = await _repo.AllReadonly<Customer>()
@@ -78,21 +83,12 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Adds customer in database and creates it's account
+    /// Adds customer in database.
     /// </summary>
-    /// <param name="model">CustomerInput model to create the user and the customer</param>
-    /// <returns>The id of the newly created user</returns>
-    public async Task<int> Add(CustomerInputModel model)
+    /// <param name="user">ApplicationUser that corresponds to that customer.</param>
+    /// <returns>The id of the newly created customer.</returns>
+    public async Task<int> Add(ApplicationUser user)
     {
-        ApplicationUser user;
-        try
-        {
-            user = await _accountService.CreateCustomer(model);
-        }
-        catch (Exception)
-        {
-            return -1;
-        }
         var customer = new Customer
         {
             User = user
@@ -104,10 +100,10 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Gets detailed customer information
+    /// Gets detailed customer information.
     /// </summary>
-    /// <param name="id">Specifies customer id</param>
-    /// <returns>CustomerDetailsModel</returns>
+    /// <param name="id">Specifies customer id.</param>
+    /// <returns>CustomerDetailsModel object.</returns>
     public async Task<CustomerDetailsModel> GetCustomerDetails(int id)
     {
         return await _repo.AllReadonly<Customer>()
@@ -134,6 +130,12 @@ public class CustomerService : ICustomerService
             .FirstAsync();
     }
 
+    /// <summary>
+    /// Updates customer in the database.
+    /// </summary>
+    /// <param name="id">Id of the customer to update.</param>
+    /// <param name="model">CustomerInputModel with new parameters.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> Update(int id, CustomerInputModel model)
     {
         var customer = await _repo.AllReadonly<Customer>()
@@ -149,6 +151,11 @@ public class CustomerService : ICustomerService
         return true;
     }
 
+    /// <summary>
+    /// Adds new car to a customer.
+    /// </summary>
+    /// <param name="model">CustomerCarInputModel object.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> AddCustomerCar(CustomerCarInputModel model)
     {
         await _repo.AddAsync(new CustomerCar
@@ -164,6 +171,12 @@ public class CustomerService : ICustomerService
         return true;
     }
 
+    /// <summary>
+    /// Gets the customer car to be edited by composite key.
+    /// </summary>
+    /// <param name="carId">CarId part of the composite key.</param>
+    /// <param name="customerId">CustomerId part of the composite key.</param>
+    /// <returns>CustomerCarInputModel object.</returns>
     public async Task<CustomerCarInputModel> GetCustomerCar(int carId, int customerId)
     {
         return await _repo.AllReadonly<CustomerCar>()
@@ -179,6 +192,11 @@ public class CustomerService : ICustomerService
             .FirstAsync();
     }
 
+    /// <summary>
+    /// Updates customer car in the database.
+    /// </summary>
+    /// <param name="model">CustomerCarInputModel with new parameters.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> UpdateCustomerCar(CustomerCarInputModel model)
     {
         var customerCar = await _repo.GetByIdsAsync<CustomerCar>(new object[] {model.CarId, model.CustomerId});
@@ -191,6 +209,11 @@ public class CustomerService : ICustomerService
         return true;
     }
 
+    /// <summary>
+    /// Adds new service to existing customer's car.
+    /// </summary>
+    /// <param name="model">CarServiceInputModel object.</param>
+    /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> AddCustomerCarService(CarServiceInputModel model)
     {
         var service = new Service

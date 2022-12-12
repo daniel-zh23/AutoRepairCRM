@@ -18,6 +18,13 @@ public class CarService : ICarService
         _repo = repo;
     }
 
+    /// <summary>
+    /// Gets call cars for customer
+    /// </summary>
+    /// <param name="customerId">Providing customerId to get his cars.</param>
+    /// <param name="currPage">User for pagination.</param>
+    /// <param name="perPage">Specifies how many to get from te database.</param>
+    /// <returns>ForCustomerResultModel object.</returns>>
     public async Task<ForCustomerResultModel> GetAllForCustomer(int customerId, int currPage = 1, int perPage = 1)
     {
         var result = new ForCustomerResultModel();
@@ -45,6 +52,12 @@ public class CarService : ICarService
         return result;
     }
 
+    /// <summary>
+    /// Gets all services info for customer's car
+    /// </summary>
+    /// <param name="carId">Providing carId to get his cars</param>
+    /// <param name="customerId">Providing customerId to get his cars</param>
+    /// <returns>CarDetails object.</returns>>
     public async Task<CarDetailsModel> GetServicesById(int carId, int customerId)
     {
         return await _repo.AllReadonly<CustomerCar>()
@@ -65,6 +78,10 @@ public class CarService : ICarService
             }).FirstAsync();
     }
 
+    /// <summary>
+    /// Get all cars from the database
+    /// </summary>
+    /// <returns>IEnumerable from CarViewModel</returns>
     public async Task<IEnumerable<CarViewModel>> GetAllCarsAsync()
     {
         return await _repo.AllReadonly<Car>()
@@ -77,29 +94,52 @@ public class CarService : ICarService
             }).ToListAsync();
     }
 
+    /// <summary>
+    /// Checks if car exists in the database
+    /// </summary>
+    /// <param name="carId">The id of the car you want to check</param>
+    /// <returns>True if found, otherwise false.</returns>
     public async Task<bool> CarExists(int carId)
     {
         return await _repo.AllReadonly<Car>()
             .AnyAsync(c => c.Id == carId);
     }
 
+    /// <summary>
+    /// Gets all fuel types from the database.
+    /// </summary>
+    /// <returns>IEnumerable of FuelType.</returns>
     public async Task<IEnumerable<FuelType>> GetFuelTypes()
     {
         return await _repo.AllReadonly<FuelType>().ToListAsync();
     }
 
+    /// <summary>
+    /// Checks if fuel exists in the database
+    /// </summary>
+    /// <param name="fuelId">Integer of the id to check.</param>
+    /// <returns>True if found, otherwise false.</returns>
     public async Task<bool> FuelExists(int fuelId)
     {
         return await _repo.AllReadonly<FuelType>()
             .AnyAsync(f => f.Id == fuelId);
     }
 
-    public async Task<bool> ServiceTypeExists(int fuelId)
+    /// <summary>
+    /// Checks if service type exists in the database
+    /// </summary>
+    /// <param name="serviceTypeId">Integer of the id to check.</param>
+    /// <returns>True if found, otherwise false.</returns>
+    public async Task<bool> ServiceTypeExists(int serviceTypeId)
     {
         return await _repo.AllReadonly<ServiceType>()
-            .AnyAsync(f => f.Id == fuelId);
+            .AnyAsync(f => f.Id == serviceTypeId);
     }
 
+    /// <summary>
+    /// Gets all service types from the database.
+    /// </summary>
+    /// <returns>IEnumerable of ServiceType.</returns>
     public async Task<IEnumerable<ServiceType>> GetServiceTypes()
     {
         return await _repo.AllReadonly<ServiceType>().ToListAsync();

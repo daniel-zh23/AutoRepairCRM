@@ -1,0 +1,80 @@
+@model AllCarsQueryModel
+
+@{
+    ViewBag.Title = "Cars";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-8 justify-content-md-start">
+        <form method="get">
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <label asp-for="@Model.SearchTerm"></label>
+                    <input asp-for="@Model.SearchTerm" class="form-control" placeholder="...">
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group p-2 my-auto mt-3">
+                        <input type="submit" value="Search" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 d-flex justify-content-md-end">
+        <div class="mt-4">
+            <a asp-controller="Car" asp-action="Add" class="btn btn-success">Add new</a>
+        </div>
+    </div>
+</div>
+@if (!Model.Cars.Any())
+{
+    <h3>No cars in database!</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th scope="col">Make</th>
+            <th scope="col">Model</th>
+            <th scope="col">Year</th>
+        </tr>
+        @foreach (var car in Model.Cars)
+        {
+            <tr>
+                <td>@car.Make</td>
+                <td>@car.Model</td>
+                <td>@car.Year</td>
+                <td class="text-sm-center">
+                    <a asp-controller="Car" asp-action="Delete" class="btn btn-danger"
+                       asp-route-id="@car.Id">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+
+
+    <div class="row mb-5">
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+               asp-controller="Car"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage - 1 == 1 ? 1 : Model.CurrentPage - 1)"
+               asp-route-searchTerm="@Model.SearchTerm">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary
+               @(Math.Ceiling((decimal)Model.Total / AllCustomerQueryModel.PeoplePerPage) == Model.CurrentPage || !Model.Cars.Any() ? "disabled" : string.Empty)"
+               asp-controller="Car"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage + 1)"
+               asp-route-searchTerm="@Model.SearchTerm">
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+}

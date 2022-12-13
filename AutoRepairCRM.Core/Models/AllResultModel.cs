@@ -4,5 +4,5 @@ public class AllResultModel<T>
 {
     public int Total { get; set; }
 
-    public IEnumerable<T> People { get; set; } = new List<T>();
+    public IEnumerable<T> Items { get; set; } = new List<T>();
 }

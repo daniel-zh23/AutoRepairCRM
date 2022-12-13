@@ -24,7 +24,7 @@ public class EmployeeController : Controller
         var models = await _employeeService.All(query.SearchTerm, query.Sorting, query.Filter, query.CurrentPage,
             AllEmployeeQueryModel.PeoplePerPage);
 
-        query.People = models.People;
+        query.People = models.Items;
         query.Total = models.Total;
         return View(query);
     }

@@ -18,6 +18,38 @@ public class CarService : ICarService
         _repo = repo;
     }
 
+    public async Task<AllResultModel<CarViewModel>> GetAll(string? searchTerm, int currPage = 1, int perPage = 1)
+    {
+        var result = new AllResultModel<CarViewModel>();
+        var cars = _repo.AllReadonly<Car>()
+            .Where(c => c.IsActive == true);
+        
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            searchTerm = $"%{searchTerm.ToLower()}%";
+
+            cars = cars
+                .Where(c => EF.Functions.Like(c.Make, searchTerm) ||
+                            EF.Functions.Like(c.Model, searchTerm) ||
+                            EF.Functions.Like(c.Year, searchTerm));
+        }
+
+        result.Items = await cars
+            .Skip((currPage - 1) * perPage)
+            .Take(perPage)
+            .Select(c => new CarViewModel()
+            {
+                Id = c.Id,
+                Make = c.Make,
+                Model = c.Model,
+                Year = c.Year
+            }).ToListAsync();
+        
+        result.Total = await cars.CountAsync();
+
+        return result;
+    }
+
     /// <summary>
     /// Gets call cars for customer
     /// </summary>
@@ -53,6 +85,49 @@ public class CarService : ICarService
     }
 
     /// <summary>
+    /// Adds a car to the database.
+    /// </summary>
+    /// <param name="model">CarInputModel object.</param>
+    /// <returns>The id of newly created car, -1 if not created.</returns>
+    public async Task<int> AddCar(CarInputModel model)
+    {
+        var car = new Car
+        {
+            Make = model.Make,
+            Model = model.Model,
+            Year = model.Year,
+            IsActive = true
+        };
+
+        try
+        {
+            await _repo.AddAsync(car);
+            await _repo.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
+        
+        return car.Id;
+    }
+
+    /// <summary>
+    /// Changes active status of a car.
+    /// </summary>
+    /// <param name="id">Id of the car to remove.</param>
+    /// <returns>True if successful, otherwise false.</returns>
+    public async Task<bool> DeleteCar(int id)
+    {
+        var car = await _repo.GetByIdAsync<Car>(id);
+
+        car.IsActive = false;
+        await _repo.SaveChangesAsync();
+        
+        return true;
+    }
+
+    /// <summary>
     /// Gets all services info for customer's car
     /// </summary>
     /// <param name="carId">Providing carId to get his cars</param>
@@ -82,9 +157,10 @@ public class CarService : ICarService
     /// Get all cars from the database
     /// </summary>
     /// <returns>IEnumerable from CarViewModel</returns>
-    public async Task<IEnumerable<CarViewModel>> GetAllCarsAsync()
+    public async Task<IEnumerable<CarViewModel>> GetAllCarsForForm()
     {
         return await _repo.AllReadonly<Car>()
+            .Where(c => c.IsActive == true)
             .Select(c => new CarViewModel
             {
                 Id = c.Id,
@@ -102,6 +178,7 @@ public class CarService : ICarService
     public async Task<bool> CarExists(int carId)
     {
         return await _repo.AllReadonly<Car>()
+            .Where(c => c.IsActive)
             .AnyAsync(c => c.Id == carId);
     }
 

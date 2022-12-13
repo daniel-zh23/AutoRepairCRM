@@ -20,28 +20,32 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
                 Id = 1,
                 Make = "BMW",
                 Model = "F82",
-                Year = "2014 - 2019"
+                Year = "2014 - 2019",
+                IsActive = true
             },
             new()
             {
                 Id = 2,
                 Make = "BMW",
                 Model = "G30",
-                Year = "2016 – 2023"
+                Year = "2016 – 2023",
+                IsActive = true
             },
             new()
             {
                 Id = 3,
                 Make = "BMW",
                 Model = "E46",
-                Year = "1997 – 2006"
+                Year = "1997 – 2006",
+                IsActive = true
             },
             new()
             {
                 Id = 4,
                 Make = "Mercedes",
                 Model = "W212",
-                Year = "2010 – 2016"
+                Year = "2010 – 2016",
+                IsActive = true
             },
         };
     }

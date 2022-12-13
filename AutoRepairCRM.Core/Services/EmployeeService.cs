@@ -79,7 +79,7 @@ public class EmployeeService : IEmployeeService
             _ => materializedEmployees
         };
         
-        result.People = materializedEmployees;
+        result.Items = materializedEmployees;
         result.Total = await employees.CountAsync();
         return result;
     }
@@ -106,7 +106,7 @@ public class EmployeeService : IEmployeeService
         };
 
         result.Total = await services.CountAsync();
-        result.People = await services
+        result.Items = await services
             .Skip((currPage - 1) * perPage)
             .Take(perPage)
             .Select(s => new EmployeeServiceViewModel

@@ -1,0 +1,36 @@
+@model CarInputModel
+
+@{
+    ViewBag.Title = "Add car";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="col-6 mx-auto">
+    <h2>@ViewBag.Title</h2>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form method="post">
+        <div class="form-group mt-3">
+            <label asp-for="@Model.Make"></label>
+            <input asp-for="@Model.Make" class="form-control">
+            <span asp-validation-for="@Model.Make" class="small text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.Model"></label>
+            <input asp-for="@Model.Model" class="form-control">
+            <span asp-validation-for="@Model.Model" class="small text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="@Model.Year"></label>
+            <input asp-for="@Model.Year" class="form-control">
+            <span asp-validation-for="@Model.Year" class="small text-danger"></span>
+        </div>
+        <div class="text-center mt-4">
+            <input type="submit" class="btn btn-primary" value="Create"/>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

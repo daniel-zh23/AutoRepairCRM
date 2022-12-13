@@ -41,7 +41,7 @@ public class CustomerService : ICustomerService
                                  EF.Functions.Like(c.User.PhoneNumber, searchTerm));
         }
 
-        result.People =  await customers
+        result.Items =  await customers
             .Skip((currPage - 1) * perPage)
             .Take(perPage)
             .Select(c => new CustomerViewModel
@@ -93,8 +93,15 @@ public class CustomerService : ICustomerService
         {
             User = user
         };
-        await _repo.AddAsync(customer);
-        await _repo.SaveChangesAsync();
+        try
+        {
+            await _repo.AddAsync(customer);
+            await _repo.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
         
         return customer.Id;
     }

@@ -32,7 +32,7 @@ public class CustomerController : Controller
             customerQuery.CurrentPage,
             AllCustomerQueryModel.PeoplePerPage);
 
-        customerQuery.People = models.People;
+        customerQuery.People = models.Items;
         customerQuery.Total = models.Total;
         return View(customerQuery);
     }
@@ -64,7 +64,7 @@ public class CustomerController : Controller
         
         if (customerId != -1) return RedirectToAction(nameof(Details), customerId);
         
-        ViewBag.Cars = await _carService.GetAllCarsAsync();
+        ViewBag.Cars = await _carService.GetAllCarsForForm();
         ModelState.AddModelError(nameof(model), "Error creating user!");
         ViewBag.Title = "Add Customer";
         return View(model);
@@ -135,7 +135,7 @@ public class CustomerController : Controller
         {
             CustomerId = id
         };
-        ViewBag.Cars = await _carService.GetAllCarsAsync();
+        ViewBag.Cars = await _carService.GetAllCarsForForm();
         ViewBag.FuelTypes = await _carService.GetFuelTypes();
         return View(model);
     }
@@ -160,7 +160,7 @@ public class CustomerController : Controller
         
         if (!ModelState.IsValid)
         {
-            ViewBag.Cars = await _carService.GetAllCarsAsync();
+            ViewBag.Cars = await _carService.GetAllCarsForForm();
             ViewBag.FuelTypes = await _carService.GetFuelTypes();
             return View(model);
         }
@@ -171,7 +171,7 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Details), new{id = model.CustomerId});
         }
         
-        ViewBag.Cars = await _carService.GetAllCarsAsync();
+        ViewBag.Cars = await _carService.GetAllCarsForForm();
         ViewBag.FuelTypes = await _carService.GetFuelTypes();
         ModelState.AddModelError(nameof(model), "Server error!");
         return View(model);
@@ -182,7 +182,7 @@ public class CustomerController : Controller
     public async Task<IActionResult> EditCar(int carId, int customerId)
     {
         var model = await _customerService.GetCustomerCar(carId, customerId);
-        ViewBag.Cars = await _carService.GetAllCarsAsync();
+        ViewBag.Cars = await _carService.GetAllCarsForForm();
         ViewBag.FuelTypes = await _carService.GetFuelTypes();
         return View(nameof(AddCar), model);
     }
@@ -207,7 +207,7 @@ public class CustomerController : Controller
         
         if (!ModelState.IsValid)
         {
-            ViewBag.Cars = await _carService.GetAllCarsAsync();
+            ViewBag.Cars = await _carService.GetAllCarsForForm();
             ViewBag.FuelTypes = await _carService.GetFuelTypes();
             return View(nameof(AddCar), model);
         }
@@ -218,7 +218,7 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Details), new{id = model.CustomerId});
         }
         
-        ViewBag.Cars = await _carService.GetAllCarsAsync();
+        ViewBag.Cars = await _carService.GetAllCarsForForm();
         ViewBag.FuelTypes = await _carService.GetFuelTypes();
         ModelState.AddModelError(nameof(model), "Server error!");
         return View(nameof(AddCar), model);

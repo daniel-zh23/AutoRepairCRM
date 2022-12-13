@@ -36,7 +36,7 @@ public class HomeController : Controller
             return RedirectToAction("Index", "Home");
         }
         var models = await _employeeService.GetServices(employeeId, query.Sorting, query.CurrentPage, AllForEmployeeModel.ServicesPerPage);
-        query.Services = models.People;
+        query.Services = models.Items;
         query.TotalServices = models.Total;
         return View(query);
     }

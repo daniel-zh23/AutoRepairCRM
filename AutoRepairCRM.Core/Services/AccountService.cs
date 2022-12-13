@@ -97,6 +97,14 @@ public class AccountService : IAccountService
         var user = await _userManager.FindByIdAsync(id);
 
         user.IsActive = false;
+        await _repo.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> ChangeFirstLoginState(ApplicationUser user, bool state)
+    {
+        user.IsFirstLogin = state;
+        await _repo.SaveChangesAsync();
         return true;
     }
 }

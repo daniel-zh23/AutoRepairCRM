@@ -33,4 +33,6 @@ public interface IAccountService
     /// <param name="id">String the id of the user.</param>
     /// <returns>True if deactivated successfully, otherwise false.</returns>
     Task<bool> Deactivate(string id);
+
+    Task<bool> ChangeFirstLoginState(ApplicationUser user, bool state);
 }

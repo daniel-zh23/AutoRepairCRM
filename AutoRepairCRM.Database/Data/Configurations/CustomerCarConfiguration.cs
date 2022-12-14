@@ -20,8 +20,8 @@ public class CustomerCarConfiguration : IEntityTypeConfiguration<CustomerCar>
                 CustomerId = 1,
                 CarId = 2,
                 LicensePlate = "В 5487 СМ",
-                EngineLitre = "3.0L",
-                FuelTypeId = 1
+                EngineLitre = "3.5L",
+                FuelTypeId = 2
             },
             new()
             {
@@ -29,6 +29,22 @@ public class CustomerCarConfiguration : IEntityTypeConfiguration<CustomerCar>
                 CarId = 3,
                 LicensePlate = "В 8866 ТМ",
                 EngineLitre = "2.5L",
+                FuelTypeId = 2
+            },
+            new()
+            {
+                CustomerId = 1,
+                CarId = 1,
+                LicensePlate = "В 1277 КН",
+                EngineLitre = "3.0L",
+                FuelTypeId = 1
+            },
+            new()
+            {
+                CustomerId = 1,
+                CarId = 4,
+                LicensePlate = "СВ 2366 НН",
+                EngineLitre = "2.0L",
                 FuelTypeId = 2
             },
         };

@@ -57,6 +57,15 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
                 DateEnded = new DateTime(2022, 12, 16),
                 Price = 1000.10m
             },
+            new()
+            {
+                Id = 5,
+                ServiceTypeId = 2,
+                CarId = 2,
+                CustomerId = 1,
+                DateStarted = new DateTime(2022, 12, 2),
+                IsFinished = false
+            },
         };
     }
 }

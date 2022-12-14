@@ -121,36 +121,13 @@ public class CarService : ICarService
     {
         var car = await _repo.GetByIdAsync<Car>(id);
 
+        if (car == null)
+            return false;
+
         car.IsActive = false;
         await _repo.SaveChangesAsync();
         
         return true;
-    }
-
-    /// <summary>
-    /// Gets all services info for customer's car
-    /// </summary>
-    /// <param name="carId">Providing carId to get his cars</param>
-    /// <param name="customerId">Providing customerId to get his cars</param>
-    /// <returns>CarDetails object.</returns>>
-    public async Task<CarDetailsModel> GetServicesById(int carId, int customerId)
-    {
-        return await _repo.AllReadonly<CustomerCar>()
-            .Where(cc => cc.CustomerId == customerId && cc.CarId == carId)
-            .Select(cc => new CarDetailsModel
-            {
-                Make = cc.Car.Make,
-                Model = cc.Car.Model,
-                Services = cc.Services
-                    .Select(s => new CustomerServiceViewModel
-                    {
-                        ServiceType = s.ServiceType.Name,
-                        ServiceState = s.IsFinished,
-                        StartDate = s.DateStarted.ToString("dd-MM-yyyy"),
-                        EndDate = s.DateEnded == null ? "" : s.DateEnded.Value.ToString("dd-MM-yyyy"),
-                        Price = s.Price
-                    })
-            }).FirstAsync();
     }
 
     /// <summary>
@@ -200,25 +177,5 @@ public class CarService : ICarService
     {
         return await _repo.AllReadonly<FuelType>()
             .AnyAsync(f => f.Id == fuelId);
-    }
-
-    /// <summary>
-    /// Checks if service type exists in the database
-    /// </summary>
-    /// <param name="serviceTypeId">Integer of the id to check.</param>
-    /// <returns>True if found, otherwise false.</returns>
-    public async Task<bool> ServiceTypeExists(int serviceTypeId)
-    {
-        return await _repo.AllReadonly<ServiceType>()
-            .AnyAsync(f => f.Id == serviceTypeId);
-    }
-
-    /// <summary>
-    /// Gets all service types from the database.
-    /// </summary>
-    /// <returns>IEnumerable of ServiceType.</returns>
-    public async Task<IEnumerable<ServiceType>> GetServiceTypes()
-    {
-        return await _repo.AllReadonly<ServiceType>().ToListAsync();
     }
 }

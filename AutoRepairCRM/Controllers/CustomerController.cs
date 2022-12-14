@@ -15,13 +15,16 @@ public class CustomerController : Controller
     private ICustomerService _customerService;
     private IEmployeeService _employeeService;
     private IAccountService _accountService;
+    private IServiceService _serviceService;
 
-    public CustomerController(ICarService carService, ICustomerService customerService, IEmployeeService employeeService, IAccountService accountService)
+    public CustomerController(ICarService carService, ICustomerService customerService,
+        IEmployeeService employeeService, IAccountService accountService, IServiceService serviceService)
     {
         _carService = carService;
         _customerService = customerService;
         _employeeService = employeeService;
         _accountService = accountService;
+        _serviceService = serviceService;
     }
     
     [HttpGet]
@@ -228,7 +231,7 @@ public class CustomerController : Controller
     [HttpGet]
     public async Task<IActionResult> AddService(int carId, int customerId)
     {
-        ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+        ViewBag.ServiceTypes = await _serviceService.GetServiceTypes();
         ViewBag.Employees = await _employeeService.AllForForm();
         var model = new CarServiceInputModel();
         return View(nameof(AddService), model);
@@ -242,7 +245,7 @@ public class CustomerController : Controller
             ModelState.AddModelError(string.Empty, "Car is not valid.");
         }
         
-        if (!await _carService.ServiceTypeExists(model.ServiceTypeId))
+        if (!await _serviceService.ServiceTypeExists(model.ServiceTypeId))
         {
             ModelState.AddModelError(string.Empty, "Service type is not valid.");
         }
@@ -264,7 +267,7 @@ public class CustomerController : Controller
         
         if (!ModelState.IsValid)
         {
-            ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+            ViewBag.ServiceTypes = await _serviceService.GetServiceTypes();
             ViewBag.Employees = await _employeeService.AllForForm();
             return View(nameof(AddService), model);
         }
@@ -275,7 +278,7 @@ public class CustomerController : Controller
             return RedirectToAction(nameof(Details), new{id = model.CustomerId});
         }
         
-        ViewBag.ServiceTypes = await _carService.GetServiceTypes();
+        ViewBag.ServiceTypes = await _serviceService.GetServiceTypes();
         ViewBag.Employees = await _employeeService.AllForForm();
         ModelState.AddModelError(nameof(model), "Server error!");
         return View(nameof(AddService), model);

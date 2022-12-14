@@ -11,13 +11,15 @@ namespace AutoRepairCRM.Areas.Customers.Controllers;
 [Authorize(Roles = "Customer, Owner, OfficeEmployee")]
 public class HomeController : Controller
 {
-    private ICarService _carService;
-    private ICustomerService _customerService;
+    private readonly ICarService _carService;
+    private readonly ICustomerService _customerService;
+    private readonly IServiceService _serviceService;
 
-    public HomeController(ICarService carService, ICustomerService customerService)
+    public HomeController(ICarService carService, ICustomerService customerService, IServiceService serviceService)
     {
         _carService = carService;
         _customerService = customerService;
+        _serviceService = serviceService;
     }
 
     public async Task<IActionResult> Personal()
@@ -41,7 +43,7 @@ public class HomeController : Controller
             return RedirectToAction("Personal");
         }
 
-        var model = await _carService.GetServicesById(carId, customerId);
+        var model = await _serviceService.GetServicesById(carId, customerId);
         
         return View(model);
     }

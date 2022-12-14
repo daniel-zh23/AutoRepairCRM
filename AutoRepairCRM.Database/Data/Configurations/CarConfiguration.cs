@@ -47,6 +47,22 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
                 Year = "2010 – 2016",
                 IsActive = true
             },
+            new()
+            {
+                Id = 5,
+                Make = "Mercedes",
+                Model = "W124",
+                Year = "1984 - 1997",
+                IsActive = true
+            },
+            new()
+            {
+                Id = 6,
+                Make = "Mercedes",
+                Model = "W212",
+                Year = "2010 – 2016",
+                IsActive = true
+            },
         };
     }
 }

@@ -40,14 +40,6 @@ public interface ICarService
     Task<bool> DeleteCar(int id);
 
     /// <summary>
-    /// Gets all services info for customer's car
-    /// </summary>
-    /// <param name="carId">Providing carId to get his cars</param>
-    /// <param name="customerId">Providing customerId to get his cars</param>
-    /// <returns>CarDetails object.</returns>>
-    Task<CarDetailsModel> GetServicesById(int carId, int customerId);
-
-    /// <summary>
     /// Get all cars from the database
     /// </summary>
     /// <returns>IEnumerable from CarViewModel</returns>
@@ -72,17 +64,4 @@ public interface ICarService
     /// <param name="fuelId">Integer of the id to check.</param>
     /// <returns>True if found, otherwise false.</returns>
     Task<bool> FuelExists(int fuelId);
-    
-    /// <summary>
-    /// Checks if service type exists in the database
-    /// </summary>
-    /// <param name="serviceTypeId">Integer of the id to check.</param>
-    /// <returns>True if found, otherwise false.</returns>
-    Task<bool> ServiceTypeExists(int serviceTypeId);
-    
-    /// <summary>
-    /// Gets all service types from the database.
-    /// </summary>
-    /// <returns>IEnumerable of ServiceType.</returns>
-    Task<IEnumerable<ServiceType>> GetServiceTypes();
 }

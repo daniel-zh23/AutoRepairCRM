@@ -25,14 +25,14 @@ public class ServiceServiceTests
         _context = new AutoRepairCrmDbContext(contextOptions);
         _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
+        
+        _repo = new Repository(_context);
+        _serviceService = new ServiceService(_repo);
     }
     
     [Test]
-    public async Task GetActiveServices_Should_Return_Correct_Amount()
+    public void GetActiveServices_Should_Return_Correct_Amount()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-        
         var result = _serviceService.GetActiveServices().Result.Count();
 
         Assert.That(result, Is.EqualTo(2));
@@ -41,9 +41,6 @@ public class ServiceServiceTests
     [Test]
     public async Task Exists_Should_Return_True_When_Found()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-        
         var result = await _serviceService.Exists(2);
 
         Assert.That(result, Is.True);
@@ -52,9 +49,6 @@ public class ServiceServiceTests
     [Test]
     public async Task Exists_Should_Return_False_When_Not_Found()
     {
-        var repo = new Repository(_context);
-        _serviceService = new ServiceService(repo);
-
         var result = await _serviceService.Exists(6);
 
         Assert.That(result, Is.False);
@@ -63,9 +57,6 @@ public class ServiceServiceTests
     [Test]
     public async Task CompleteService_Should_Mark_Service_As_Finished()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-        
         var result = await _serviceService.CompleteService(new ServiceCompleteModel() { Id = 5, Price = 10 });
         var completedCount = _repo
             .AllReadonly<Service>()
@@ -81,9 +72,6 @@ public class ServiceServiceTests
     [Test]
     public async Task ServiceTypeExists_Should_Return_True_On_Found()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-
         var result = await _serviceService.ServiceTypeExists(1);
         
         Assert.That(result, Is.True);
@@ -92,9 +80,6 @@ public class ServiceServiceTests
     [Test]
     public async Task ServiceTypeExists_Should_Return_False_On_Not_Found()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-
         var result = await _serviceService.ServiceTypeExists(-1);
         
         Assert.That(result, Is.False);
@@ -103,9 +88,6 @@ public class ServiceServiceTests
     [Test]
     public async Task GetServiceTypes_Should_Return_Correct_Amount_Of_Data()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-
         var result = await _serviceService.GetServiceTypes();
         
         Assert.That(result.Count(), Is.EqualTo(3));
@@ -114,9 +96,6 @@ public class ServiceServiceTests
     [Test]
     public async Task GetServicesById_Should_Return_Correct_Amount_Of_Services_For_Car()
     {
-        _repo = new Repository(_context);
-        _serviceService = new ServiceService(_repo);
-
         var result = await _serviceService.GetServicesById(2, 1);
         
         Assert.That(result.Services.Count(), Is.EqualTo(4));

@@ -156,19 +156,25 @@ public class EmployeeService : IEmployeeService
     /// </summary>
     /// <param name="model">Input model from form.</param>
     /// <param name="user">Application user that corresponds to that employee.</param>
-    /// <returns>Id of the employee, null if not succeeded.</returns>
-    public async Task<string?> Add(EmployeeInputModel model, ApplicationUser user)
+    /// <returns>Id of the employee, -1 if not succeeded.</returns>
+    public async Task<int> Add(EmployeeInputModel model, ApplicationUser user)
     {
-        var employee = new Employee
+        try
         {
-            User = user,
-            Salary = model.Salary,
-            BonusPercent = model.Bonus
-        };
-        await _repo.AddAsync(employee);
-        await _repo.SaveChangesAsync();
-
-        return user.Id;
+            var employee = new Employee
+            {
+                User = user,
+                Salary = model.Salary,
+                BonusPercent = model.Bonus
+            };
+            await _repo.AddAsync(employee);
+            await _repo.SaveChangesAsync();
+            return employee.Id;
+        }
+        catch (Exception)
+        {
+            return -1;
+        }
     }
 
     /// <summary>
@@ -214,14 +220,21 @@ public class EmployeeService : IEmployeeService
     /// <returns>True if successful, otherwise false.</returns>>
     public async Task<bool> Fire(int id)
     {
-        var employee = await _repo.GetByIdAsync<Employee>(id);
-        var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
+        try
+        {
+            var employee = await _repo.GetByIdAsync<Employee>(id);
+            var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
 
-        employee.IsActive = false;
-        await _accountService.Deactivate(user.Id);
+            employee.IsActive = false;
+            await _accountService.Deactivate(user.Id);
         
-        await _repo.SaveChangesAsync();
-        return true;
+            await _repo.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     /// <summary>
@@ -255,19 +268,27 @@ public class EmployeeService : IEmployeeService
     /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> Update(int id, EmployeeInputModel model)
     {
-        var employee = await _repo.AllReadonly<Employee>()
-            .Where(c => c.Id == id)
-            .FirstAsync();
-        var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
-        user.FirstName = model.FirstName;
-        user.LastName = model.LastName;
-        user.PhoneNumber = model.Phone;
-        user.Email = model.Email;
-        employee.Salary = model.Salary;
-        employee.BonusPercent = model.Bonus;
+        try
+        {
+            var employee = await _repo.AllReadonly<Employee>()
+                .Where(c => c.Id == id)
+                .FirstAsync();
+            var user = await _repo.GetByIdAsync<ApplicationUser>(employee.UserId!);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.Phone;
+            user.Email = model.Email;
+            employee.Salary = model.Salary;
+            employee.BonusPercent = model.Bonus;
 
-        _repo.Update(employee);
-        await _repo.SaveChangesAsync();
-        return true;
+            _repo.Update(employee);
+            await _repo.SaveChangesAsync();
+            return true;
+
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

@@ -35,6 +35,11 @@ public class UserRolesConfiguration : IEntityTypeConfiguration<IdentityUserRole<
                 UserId = "MockUser4",
                 RoleId = "MockRole4"
             },
+            new()
+            {
+                UserId = "MockUser9",
+                RoleId = "MockRole5"
+            }
         };
     }
 }

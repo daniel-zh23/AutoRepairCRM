@@ -10,10 +10,38 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
 {
     public void Configure(EntityTypeBuilder<Customer> builder)
     {
-        builder.HasData(new Customer()
+        builder.HasData(GetAll());
+    }
+
+    private IEnumerable<Customer> GetAll()
+    {
+        return new List<Customer>
         {
-            Id = 1,
-            UserId = "MockUser2",
-        });
+            new()
+            {
+                Id = 1,
+                UserId = "MockUser2",
+            },
+            new()
+            {
+                Id = 2,
+                UserId = "MockUser5",
+            },
+            new()
+            {
+                Id = 3,
+                UserId = "MockUser6",
+            },
+            new()
+            {
+                Id = 4,
+                UserId = "MockUser7",
+            },
+            new()
+            {
+                Id = 5,
+                UserId = "MockUser8",
+            },
+        };
     }
 }

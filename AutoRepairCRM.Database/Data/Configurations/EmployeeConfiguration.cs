@@ -28,6 +28,13 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
                 UserId = "MockUser4",
                 Salary = 1100.0m,
                 BonusPercent = 0
+            },
+            new()
+            {
+                Id = 3,
+                UserId = "MockUser9",
+                Salary = 1600.0m,
+                BonusPercent = 3
             }
         };
     }

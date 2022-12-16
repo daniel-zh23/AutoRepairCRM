@@ -147,14 +147,26 @@ public class CustomerService : ICustomerService
     {
         var customer = await _repo.AllReadonly<Customer>()
             .Where(c => c.Id == id)
-            .FirstAsync();
-        var user = await _repo.GetByIdAsync<ApplicationUser>(customer.UserId);
-        user.FirstName = model.FirstName;
-        user.LastName = model.LastName;
-        user.PhoneNumber = model.Phone;
-        user.Email = model.Email;
+            .FirstOrDefaultAsync();
 
-        await _repo.SaveChangesAsync();
+        if (customer == null)
+        {
+            return false;
+        }
+        try
+        {
+            var user = await _repo.GetByIdAsync<ApplicationUser>(customer.UserId);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.PhoneNumber = model.Phone;
+            user.Email = model.Email;
+
+            await _repo.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
         return true;
     }
 
@@ -165,14 +177,21 @@ public class CustomerService : ICustomerService
     /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> AddCustomerCar(CustomerCarInputModel model)
     {
-        await _repo.AddAsync(new CustomerCar
+        try
         {
-            CarId = model.CarId,
-            CustomerId = model.CustomerId,
-            EngineLitre = model.Litre,
-            FuelTypeId = model.FuelTypeId,
-            LicensePlate = model.LicensePlate
-        });
+            await _repo.AddAsync(new CustomerCar
+            {
+                CarId = model.CarId,
+                CustomerId = model.CustomerId,
+                EngineLitre = model.Litre,
+                FuelTypeId = model.FuelTypeId,
+                LicensePlate = model.LicensePlate
+            });
+        }
+        catch (Exception)
+        {
+            return false;
+        }
         
         await _repo.SaveChangesAsync();
         return true;
@@ -206,13 +225,20 @@ public class CustomerService : ICustomerService
     /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> UpdateCustomerCar(CustomerCarInputModel model)
     {
-        var customerCar = await _repo.GetByIdsAsync<CustomerCar>(new object[] {model.CarId, model.CustomerId});
-        customerCar.FuelTypeId = model.FuelTypeId;
-        customerCar.EngineLitre = model.Litre;
-        customerCar.LicensePlate = model.LicensePlate;
-        customerCar.CarId = model.CarId;
+        try
+        {
+            var customerCar = await _repo.GetByIdsAsync<CustomerCar>(new object[] {model.CarId, model.CustomerId});
+            customerCar.FuelTypeId = model.FuelTypeId;
+            customerCar.EngineLitre = model.Litre;
+            customerCar.LicensePlate = model.LicensePlate;
+            customerCar.CarId = model.CarId;
 
-        await _repo.SaveChangesAsync();
+            await _repo.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
         return true;
     }
 
@@ -223,20 +249,27 @@ public class CustomerService : ICustomerService
     /// <returns>True if successful, otherwise false.</returns>
     public async Task<bool> AddCustomerCarService(CarServiceInputModel model)
     {
-        var service = new Service
+        try
         {
-            CarId = model.CarId,
-            CustomerId = model.CustomerId,
-            DateStarted = model.DateStarted,
-            IsFinished = false,
-            ServiceTypeId = model.ServiceTypeId
-        };
+            var service = new Service
+            {
+                CarId = model.CarId,
+                CustomerId = model.CustomerId,
+                DateStarted = model.DateStarted,
+                IsFinished = false,
+                ServiceTypeId = model.ServiceTypeId
+            };
 
-        var services = model.Employees.Select(emp => new ServiceEmployee { EmployeeId = emp, Service = service }).ToList();
+            var services = model.Employees.Select(emp => new ServiceEmployee { EmployeeId = emp, Service = service }).ToList();
 
-        await _repo.AddRangeAsync(services);
-        await _repo.AddAsync(service);
-        await _repo.SaveChangesAsync();
+            await _repo.AddRangeAsync(services);
+            await _repo.AddAsync(service);
+            await _repo.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return false;
+        }
         return true;
     }
 }

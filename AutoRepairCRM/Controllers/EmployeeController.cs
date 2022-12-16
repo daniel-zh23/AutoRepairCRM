@@ -57,14 +57,14 @@ public class EmployeeController : Controller
         }
         
         var user = await _accountService.CreateEmployee(model);
-        string? empId = null;
+        int empId = -1;
         
         if (user != null)
         {
             empId = await _employeeService.Add(model, user);
         }
 
-        if (!string.IsNullOrEmpty(empId))
+        if (empId == -1)
         {
             return RedirectToAction(nameof(All));
         }

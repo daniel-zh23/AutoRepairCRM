@@ -11,7 +11,7 @@ public class ServiceConfiguration : IEntityTypeConfiguration<Service>
         builder.HasData(GetAll());
     }
 
-    public List<Service> GetAll()
+    private List<Service> GetAll()
     {
         return new List<Service>()
         {

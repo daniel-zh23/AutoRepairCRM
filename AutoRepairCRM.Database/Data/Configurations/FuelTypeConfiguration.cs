@@ -11,7 +11,7 @@ public class FuelTypeConfiguration : IEntityTypeConfiguration<FuelType>
         builder.HasData(GetAll());
     }
 
-    public List<FuelType> GetAll()
+    private List<FuelType> GetAll()
     {
         return new List<FuelType>()
         {

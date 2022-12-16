@@ -11,7 +11,7 @@ public class CarConfiguration : IEntityTypeConfiguration<Car>
         builder.HasData(GetCars());
     }
 
-    public IList<Car> GetCars()
+    private IList<Car> GetCars()
     {
         return new List<Car>()
         {

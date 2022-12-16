@@ -47,8 +47,8 @@ public interface IEmployeeService
     /// </summary>
     /// <param name="model">Input model from form.</param>
     /// <param name="user">Application user that corresponds to that employee.</param>
-    /// <returns>Id of the employee, null if not succeeded.</returns>
-    Task<string?> Add(EmployeeInputModel model, ApplicationUser user);
+    /// <returns>Id of the employee, -1 if not succeeded.</returns>
+    Task<int> Add(EmployeeInputModel model, ApplicationUser user);
 
     /// <summary>
     /// Check if employee exists.

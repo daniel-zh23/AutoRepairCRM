@@ -50,8 +50,7 @@ public class EmployeeServiceTests
         accountService
             .Setup(s => s.CreateEmployee(new EmployeeInputModel()))
             .ReturnsAsync(user);
-
-        var data = new List<string>();
+        
         accountService
             .Setup(s => s.GetRolesForUser(It.IsAny<ApplicationUser>()))
             .ReturnsAsync((ApplicationUser u) =>

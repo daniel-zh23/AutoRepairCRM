@@ -115,7 +115,8 @@ public class EmployeeService : IEmployeeService
                 ServiceType = s.Service.ServiceType.Name,
                 ServiceState = s.Service.IsFinished,
                 StartDate = s.Service.DateStarted.ToString("dd-MM-yyyy"),
-                EndDate = s.Service.DateEnded == null ? "" : s.Service.DateEnded.Value.ToString("dd-MM-yyyy")
+                EndDate = s.Service.DateEnded == null ? "" : s.Service.DateEnded.Value.ToString("dd-MM-yyyy"),
+                Price = s.Service.Price
             })
             .ToListAsync();
 
